@@ -9,6 +9,7 @@ import Etablissements from "./routes/etablissements";
 import Deconnexion from "./routes/deconnexion";
 import Connexion from "./routes/connexion";
 import HomePage from "./routes/home-page";
+import EtablissementDetails from "./routes/etablissement_modifier";
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
       {
         path: "/etablissements",
         element: <Etablissements />,
+      },
+      {
+        path: "/etablissements/modifier/:id",
+        element: <EtablissementDetails />,
       },
       {
         path: "/deconnexion",

@@ -67,7 +67,7 @@ function HomePage() {
       {<div onClick={changeVisibility} id="overlay" className="absolute w-full h-screen bg-overlayColor z-1 lg:hidden max-lg:hidden max-md:hidden max-sm:hidden"></div>}
       <SideBar visibility={visibility} changeVisibility={changeVisibility}/>
       <div className="w-full flex flex-row bg-bgGreyColor h-screen overflow-y-scroll">
-        <Outlet />
+        <Outlet  />
         <Toaster position="top-right" />
       </div>
     </div>

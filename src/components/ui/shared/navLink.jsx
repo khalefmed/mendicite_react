@@ -10,12 +10,13 @@ export const MyNavLink = ({route, label, icon: Icon}) => {
                   to={`/${route}`}
                   className={({ isActive, isPending }) =>
                     isPending
-                      ? "flex items-center gap-2 fill-textGreyColor px-[15px] py-[10px] rounded-lg w-[150px] hover:bg-bgGreyColor"
+                      ? "flex items-center gap-2 fill-textGreyColor px-[15px] py-[10px] rounded-lg w-[200px] hover:bg-bgGreyColor"
                       : isActive
-                      ? "flex items-center gap-2 px-[15px] py-[10px] rounded-lg w-[150px] bg-gradient-to-b from-buttonGradientSecondary to-buttonGradientPrimary text-white font-normal fill-whiteColor"
-                      : "flex items-center gap-2 fill-textGreyColor px-[15px] py-[10px] rounded-lg w-[150px] hover:bg-bgGreyColor"
+                      ? "flex items-center gap-2 px-[15px] py-[10px] rounded-sm w-[200px] bg-shadowColor text-blackColor font-bold  fill-whiteColor"
+                      // ? "flex items-center gap-2 px-[15px] py-[10px] rounded-sm w-[200px] bg-gradient-to-b from-buttonGradientSecondary to-buttonGradientPrimary text-white font-normal fill-whiteColor"
+                      : "flex items-center gap-2 fill-textGreyColor px-[15px] py-[10px] rounded-lg w-[200px] hover:bg-bgGreyColor"
                   }>
-                  <Icon />
+                  <Icon size={15} />
 
                   <p>{label}</p>
                 </NavLink>

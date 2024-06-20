@@ -30,11 +30,11 @@ function DeleteModal(props) {
     };
 
     if (i18n.language == "ar"){
-      style['fontFamily'] = "Alexandria"
+      style['fontFamily'] = "Tajawal"
       style['direction'] = "rtl"
     }
     else {
-      style['fontFamily'] = "Poppins"
+      style['fontFamily'] = "Tajawal"
       style['direction'] = "ltr"
     }
 

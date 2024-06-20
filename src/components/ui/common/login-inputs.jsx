@@ -15,7 +15,7 @@ export default function InputWithIcon(props) {
     color: "black",
     borderBottom: props.usernameError ? "1.5px solid red" : "1.5px solid grey",
     gap : "10px",
-    fontFamily : "Alexandria",
+    fontFamily : "Tajawal",
     fontSize : "14px",
     accentColor: "black",
     "& .MuiOutlinedInputInput:focused": {
@@ -27,7 +27,7 @@ export default function InputWithIcon(props) {
     color: "black",
     borderBottom: props.passwordError ? "1.5px solid red" : "1.5px solid grey",
     gap : "10px",
-    fontFamily : "Alexandria",
+    fontFamily : "Tajawal",
     fontSize : "14px",
     accentColor: "black",
     "& .MuiOutlinedInputInput:focused": {

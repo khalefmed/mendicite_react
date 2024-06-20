@@ -1,3 +1,4 @@
+const { mauve, violet, red, blackA } = require('@radix-ui/colors');
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
@@ -13,6 +14,10 @@ export default {
     },
     extend: {
       colors: {
+        ...mauve,
+        ...violet,
+        ...red,
+        ...blackA,
         bgGreyColor: "#F1F7FF",
         whiteColor: "#fff",
         textGreyColor: "#B9C4D1",
@@ -59,8 +64,8 @@ export default {
         },
       },
       fontFamily: {
-        fr: ["Arial", "sans-serif"],
-        arabic: ["Alexandria", "sans-serif"],
+        fr: ["Poppins", "sans-serif"],
+        arabic: ["Tajawal", "sans-serif"],
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -76,6 +81,7 @@ export default {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -91,10 +97,20 @@ export default {
         from: { opacity: 0.5, transform: "translate(100%, 0%)" },
         to: { opacity: 1, transform: "translate(0%, 0%)" },
       },
+      overlayShow: {
+        from: { opacity: '0' },
+        to: { opacity: '1' },
+      },
+      contentShow: {
+        from: { opacity: '0', transform: 'translate(-50%, -48%) scale(0.96)' },
+        to: { opacity: '1', transform: 'translate(-50%, -50%) scale(1)' },
+      },
     },
     animation: {
       sideBarLeftAnimation: "sideBarLeftAnimation 700ms cubic-bezier(0.16, 1, 0.3, 1) ",
       sideBarRightAnimation: "sideBarRightAnimation 700ms cubic-bezier(0.16, 1, 0.3, 1) ",
+      overlayShow: 'overlayShow 150ms cubic-bezier(0.16, 1, 0.3, 1)',
+      contentShow: 'contentShow 150ms cubic-bezier(0.16, 1, 0.3, 1)',
     },
   },
   plugins: [require("tailwindcss-animate")],

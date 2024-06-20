@@ -3,6 +3,11 @@ import { useTranslation } from "react-i18next";
 import { NavLink } from "react-router-dom";
 import { MyNavLink } from "../shared/navLink";
 import {TruckIcon} from "../../icons/truck.jsx";
+import { IoHome } from "react-icons/io5";
+import { IoMdBusiness } from "react-icons/io";
+import { MdGroups } from "react-icons/md";
+import { FaUsers } from "react-icons/fa";
+import { BsBank2 } from "react-icons/bs";
 
 
 
@@ -24,7 +29,7 @@ function SideBar(props) {
   const frenshAnimation =
     "flex flex-col py-[30px] gap-10 w-[250px] bg-whiteColor  h-full text-[12px] overflow-y-scroll z-50 max-lg:absolute max-md:absolute max-sm:absolute transform max-lg:animate-sideBarLeftAnimation max-md:animate-sideLeftBarAnimation max-sm:animate-sideLeftBarAnimation";
   const arabicAnimation =
-    "flex flex-col py-[30px] gap-10 w-[250px] bg-whiteColor  h-full text-[12px] overflow-y-scroll z-50 max-lg:absolute max-md:absolute max-sm:absolute transform max-lg:animate-sideBarRightAnimation max-md:animate-sideBarRightAnimation max-sm:animate-sideBarRightAnimation";
+    "flex flex-col py-[30px] gap-10 w-[250px] font-arabic bg-whiteColor  h-full text-[12px] overflow-y-scroll z-50 max-lg:absolute max-md:absolute max-sm:absolute transform max-lg:animate-sideBarRightAnimation max-md:animate-sideBarRightAnimation max-sm:animate-sideBarRightAnimation";
 
   return (
     <>
@@ -41,10 +46,12 @@ function SideBar(props) {
             />
           </div>
           <nav className="text-[12px]  pr-10 pl-10">
-            <ul className="flex flex-col items-start gap-[15px] mx-auto list-none ">
-              <MyNavLink route="acceuil" label="Acceuil" icon={TruckIcon}/>
-              <MyNavLink route="etablissements" label="Etablissements" icon={TruckIcon}/>
-              <MyNavLink route="salaries" label="Salariés" icon={TruckIcon}/>
+            <ul className="flex flex-col items-start gap-[15px] mx-auto list-none font-fr ">
+              <MyNavLink route="acceuil" label={t("Acceuil")} icon={IoHome}/>
+              <MyNavLink route="etablissements" label={t("Etablissements")} icon={IoMdBusiness}/>
+              <MyNavLink route="salaries" label={t("Salariés")} icon={MdGroups}/>
+              <MyNavLink route="banques" label={t("Banques")} icon={BsBank2}/>
+              <MyNavLink route="utilisateurs" label={t("Utilisateurs")} icon={FaUsers}/>
 
             </ul>
           </nav>

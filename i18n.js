@@ -14,7 +14,7 @@ i18n.use(initReactI18next).init({
     fr: { translation: fr },
     ar: { translation: ar },
   },
-  lng: "fr", // Default Value
+  lng: "ar", // Default Value
   interpolation: {
     escapeValue: false,
   },
