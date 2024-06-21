@@ -6,6 +6,7 @@ import SideBar from "../components/ui/common/side-bar";
 import i18n from "../../i18n"
 import { useTranslation } from "react-i18next";
 import { Toaster } from "react-hot-toast";
+import { Header } from "@/components/ui/common/header";
 
 function HomePage() {
 
@@ -66,11 +67,13 @@ function HomePage() {
       }
       {<div onClick={changeVisibility} id="overlay" className="absolute w-full h-screen bg-overlayColor z-1 lg:hidden max-lg:hidden max-md:hidden max-sm:hidden"></div>}
       <SideBar visibility={visibility} changeVisibility={changeVisibility}/>
-      <div className="w-full flex flex-row bg-bgGreyColor h-screen overflow-y-scroll">
+      <div className="w-full flex flex-col gap-10 py-2 bg-bgGreyColor h-screen overflow-y-scroll">
+        <Header  />
         <Outlet  />
+      </div>
+       
         <Toaster position="top-right" />
       </div>
-    </div>
   );
 }
 
