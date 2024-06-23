@@ -10,6 +10,10 @@ import Deconnexion from "./routes/deconnexion";
 import Connexion from "./routes/connexion";
 import HomePage from "./routes/home-page";
 import EtablissementDetails from "./routes/etablissement_modifier";
+import Banques from "./routes/banques";
+import Salaries from "./routes/salaries";
+import Cheques from "./routes/cheques";
+import Utilisateurs from "./routes/utilisateurs";
 
 const router = createBrowserRouter([
   {
@@ -23,6 +27,22 @@ const router = createBrowserRouter([
       {
         path: "/etablissements",
         element: <Etablissements />,
+      },
+      {
+        path: "/banques",
+        element: <Banques />,
+      },
+      {
+        path: "/salaries",
+        element: <Salaries />,
+      },
+      {
+        path: "/cheques",
+        element: <Cheques />,
+      },
+      {
+        path: "/utilisateurs",
+        element: <Utilisateurs />,
       },
       {
         path: "/etablissements/modifier/:id",

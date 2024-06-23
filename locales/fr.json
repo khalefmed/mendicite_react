@@ -23,7 +23,10 @@
   "Total des etablissements" : "Total des établissements",
   "MRU" : "MRU",
   "Rechercher" : "Rechercher ...",
-  "Nouveau" : "Nouveau"
+  "Nouveau" : "Nouveau",
+
+  "Total des banques" : "Total des banques",
+  "Nombre de comptes" : "Nombre de comptes"
   
 
 }

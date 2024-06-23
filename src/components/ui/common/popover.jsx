@@ -9,6 +9,10 @@ import { IoLogOut } from "react-icons/io5";
 export default function MenuCompte() {
 
     const { i18n, t } = useTranslation();
+
+    const prenom = window.localStorage.getItem("prenom")
+    const nom = window.localStorage.getItem("nom")
+    const role = window.localStorage.getItem("role")
   return (
     <div className="flex">
       <div className="">
@@ -19,8 +23,8 @@ export default function MenuCompte() {
                         <img src={Account} height={30} className="rounded-full border-1 border-blackColor" alt="" />
                     </div>
                     <div className='flex flex-col items-start justify-center align-center gap-0'>
-                        <p className='font-semibold text-blackColor text-xs'>{t("Nine Oumar")}</p>
-                        <p  className=' font-normal text-textGreyColor text-[0.65rem]'>{t("Agent Trésor")}</p>
+                        <p className='font-semibold text-blackColor text-xs'>{prenom} {nom}</p>
+                        <p  className=' font-normal text-textGreyColor text-xs'>{role}</p>
                     </div>
                 </div>
           </PopoverButton>
@@ -45,7 +49,7 @@ export default function MenuCompte() {
                         <MdPassword size={20} />
                         <span>{t('Mot de passe')}</span>
                     </a>
-                    <a href='/logout' className='flex flex-row gap-2 px-4 pb-4 pt-2 text-redColor hover:bg-bgGreyColor cursor-pointer items-center duratoion-500'>
+                    <a href='/deconnexion' className='flex flex-row gap-2 px-4 pb-4 pt-2 text-redColor hover:bg-bgGreyColor cursor-pointer items-center duratoion-500'>
                         <IoLogOut size={20} />
                         <span>{t('Deconnexion')}</span>
                     </a>

@@ -7,6 +7,7 @@ import { IoHome } from "react-icons/io5";
 import { IoMdBusiness } from "react-icons/io";
 import { MdGroups } from "react-icons/md";
 import { FaUsers } from "react-icons/fa";
+import { FaMoneyCheck } from "react-icons/fa";
 import { BsBank2 } from "react-icons/bs";
 
 
@@ -23,7 +24,6 @@ function SideBar(props) {
 
   if(role == null){
     window.location = "/connexion";
-
   }
 
   const frenshAnimation =
@@ -48,10 +48,12 @@ function SideBar(props) {
           <nav className="text-[12px]  pr-10 pl-10">
             <ul className="flex flex-col items-start gap-[15px] mx-auto list-none font-fr ">
               <MyNavLink route="acceuil" label={t("Acceuil")} icon={IoHome}/>
-              <MyNavLink route="etablissements" label={t("Etablissements")} icon={IoMdBusiness}/>
-              <MyNavLink route="salaries" label={t("Salariés")} icon={MdGroups}/>
-              <MyNavLink route="banques" label={t("Banques")} icon={BsBank2}/>
-              <MyNavLink route="utilisateurs" label={t("Utilisateurs")} icon={FaUsers}/>
+              {role == "Administrateur" || role == "Agent Trésor" ? <MyNavLink route="etablissements" label={t("Etablissements")} icon={IoMdBusiness}/> : <></>}
+              {role != "Administrateur" && role != "Agent Trésor" ? <MyNavLink route="salaries" label={t("Salariés")} icon={MdGroups}/> : <></>}
+              {role == "Administrateur" || role == "Agent Trésor" ? <MyNavLink route="banques" label={t("Banques")} icon={BsBank2}/> : <></> }
+              {role == "Administrateur" ? <MyNavLink route="utilisateurs" label={t("Utilisateurs")} icon={FaUsers}/> : <></>}
+              {role == "Administrateur" || role == "Agent Trésor" ? <MyNavLink route="cheques" label={t("Chèques")} icon={FaMoneyCheck}/> : <></> }
+              
 
             </ul>
           </nav>

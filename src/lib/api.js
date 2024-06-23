@@ -8,7 +8,7 @@ export const api = axios.create({
   baseURL: BACKEND_BASE_URL,
   headers: {
     "Content-Type": "application/json",
-    // "Authorization" : `Bearer ${token}`
+    "Authorization" : `Bearer ${token}`
 
   },
 });

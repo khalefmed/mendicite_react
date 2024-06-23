@@ -4,7 +4,7 @@ function Acceuil() {
 
   return (
     <div className="w-full h-screen px-12">
-      <Header/>
+      
     </div>
     
   );
