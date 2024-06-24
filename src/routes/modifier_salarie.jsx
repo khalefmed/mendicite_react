@@ -90,8 +90,8 @@ export const ModifierSalarie = () => {
     return (
         <div className='p-10 mx-10 flex flex-col gap-3 bg-whiteColor rounded-lg shadow-xl shadow-shadowColor'>
             <h1 className='text-2xl text-blackColor font-bold'>{t('Modifier l\'utilisateur')}</h1>
-            <p className='text-lg text-textGreyColor font-medium'>{t('Veuillez remplir les champs suivant pour modifier le salarié')}</p>
-            <form onSubmit={(e) => modifier(e)} className='w-[400px] flex flex-col gap-4 '>
+            <p className='text-lg max-sm:text-sm text-textGreyColor font-medium '>{t('Veuillez remplir les champs suivant pour modifier le salarié')}</p>
+            <form onSubmit={(e) => modifier(e)} className='w-[400px] max-sm:w-full flex flex-col gap-4 '>
                 <div>
                     <p  className='text-lg  text-blackColor font-semibold'>{t('Nom')}</p>
                     <input type="text" value={nom} onChange={(e) => setNom(e.target.value)} placeholder={t("Entrez le nom ")} className="px-4 py-2 w-full bg-inputFieldColor rounded-lg outline-none placeholder-inputTextColor font-medium" />

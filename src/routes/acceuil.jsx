@@ -31,7 +31,7 @@ function Acceuil() {
   }
 
   return (
-    <div className="flex flex-col gap-10 px-10 ">
+    <div className="flex flex-col gap-10 px-10 max-sm:px-4 ">
       <div className="w-full flex flex-row max-sm:flex-col max-sm:gap-3 justify-between ">
         <StatsCard titre={t("Total des etablissements")} label={t("Etablissements")} valeur={donnees.total_etablissements} icon={IoBusiness}  />
         <StatsCard titre={t("Total des salariés")} label={t("Salariés")} valeur={donnees.total_salaries} icon={FaPeopleGroup}  />

@@ -38,8 +38,8 @@ export const Profil = () => {
     return (
         <div className='p-10 mx-10 flex flex-col gap-3 bg-whiteColor rounded-lg shadow-xl shadow-shadowColor'>
             <h1 className='text-2xl text-blackColor font-bold'>{t('Mon Profil')}</h1>
-            <p className='text-lg text-textGreyColor font-medium'>{""}</p>
-            <div className='w-[400px] flex flex-col gap-4 '>
+            <p className='text-lg max-sm:text-sm text-textGreyColor font-medium '>{""}</p>
+            <div className='w-[400px] max-sm:w-full flex flex-col gap-4 '>
                 <div>
                     <p  className='text-md  text-blackColor font-semibold'>{t('Prenom')}</p>
                     <p className='text-md text-textGreyColor font-medium'>{prenom}</p>

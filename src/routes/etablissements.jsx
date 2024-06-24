@@ -51,14 +51,14 @@ function Etablissements() {
 
 
   return (
-    <div className="flex flex-col gap-10 px-10 ">
+    <div className="flex flex-col gap-10 px-10 max-sm:px-4 ">
       <div className="w-full flex flex-row max-sm:flex-col max-sm:gap-3 justify-between ">
         <StatsCard titre={t("Total des etablissements")} label={t("Etablissements")} valeur={statistiques.total} icon={IoBusiness}  />
         <StatsCard titre={t("Nombre de salariés")} label={t("Salariés")} valeur={statistiques.nombre_salaries} icon={FaPeopleGroup}  />
         <StatsCard titre={t("Moyenne des salaires")} label={t("MRU")} valeur={statistiques.moyenne_salaires} icon={FaMoneyBillWave}  />
       </div>
 
-      <div className='flex flex-row justify-between items-center'>
+      <div className='flex flex-row max-md:flex-col gap-3 justify-between items-center'>
         <Recherche rechercher={rechercher} recherche={recherche} setRecherche={setRecherche}/>
         <NouveauBoutton lien="etablissements"/>
       </div>

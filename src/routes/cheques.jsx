@@ -54,14 +54,14 @@ function Cheques() {
 
 
   return (
-    <div className="flex flex-col gap-10 px-10 ">
+    <div className="flex flex-col gap-10 px-10 max-sm:px-4 ">
       <div className="w-full flex flex-row max-sm:flex-col max-sm:gap-3 justify-between ">
         <StatsCard titre={t("Total des cheques")} label={t("Chèques")} valeur={statistiques.total} icon={BsBank2}  />
         <StatsCard titre={t("Nombre de comptes")} label={t("Comptes")} valeur={statistiques.nombre_comptes} icon={FaMoneyBillWave}  />
         <StatsCard titre={t("Moyenne des salaires")} label={t("MRU")} valeur={statistiques.moyenne} icon={FaMoneyBillWave}  />
       </div>
 
-      <div className='flex flex-row justify-between items-center'>
+      <div className='flex flex-row max-md:flex-col gap-3 justify-between items-center'>
         <Recherche rechercher={rechercher} recherche={recherche} setRecherche={setRecherche}/>
         <NouveauBoutton lien="cheques"/>
       </div>

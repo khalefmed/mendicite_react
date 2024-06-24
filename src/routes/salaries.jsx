@@ -50,14 +50,14 @@ function Salaries() {
 
 
   return (
-    <div className="flex flex-col gap-10 px-10 ">
+    <div className="flex flex-col gap-10 px-10 max-sm:px-4 ">
       <div className="w-full flex flex-row max-sm:flex-col max-sm:gap-3 justify-between ">
         <StatsCard titre={t("Total des salariés")} label={t("Salaries")} valeur={statistiques.total} icon={BsBank2}  />
         <StatsCard titre={t("Total des salaires")} label={t("MRU")} valeur={statistiques.total_salaires} icon={FaMoneyBillWave}  />
         <StatsCard titre={t("Moyenne des salaires")} label={t("MRU")} valeur={statistiques.moyenne_salaires} icon={FaMoneyBillWave}  />
       </div>
 
-      <div className='flex flex-row justify-between items-center'>
+      <div className='flex flex-row max-md:flex-col gap-3 justify-between items-center'>
         <Recherche rechercher={rechercher} recherche={recherche} setRecherche={setRecherche}/>
         <NouveauBoutton lien="salaries"/>
       </div>

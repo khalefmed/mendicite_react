@@ -54,14 +54,14 @@ function Utilisateurs() {
 
 
   return (
-    <div className="flex flex-col gap-10 px-10 ">
+    <div className="flex flex-col gap-10 px-10 max-sm:px-4 ">
       <div className="w-full flex flex-row max-sm:flex-col max-sm:gap-3 justify-between ">
         <StatsCard titre={t("Nombre total des agents")} label={t("Utilisateurs")} valeur={statistiques.total} icon={BsBank2}  />
         <StatsCard titre={t("Nombre d'agent trésor")} label={t("Agents")} valeur={statistiques.agents_tresor} icon={FaMoneyBillWave}  />
         <StatsCard titre={t("Nombre d'agent etablissement")} label={t("Agents")} valeur={statistiques.agents_etablissement} icon={FaMoneyBillWave}  />
       </div>
 
-      <div className='flex flex-row justify-between items-center'>
+      <div className='flex flex-row max-md:flex-col gap-3 justify-between items-center'>
         <Recherche rechercher={rechercher} recherche={recherche} setRecherche={setRecherche}/>
         <NouveauBoutton lien="utilisateurs"/>
       </div>
