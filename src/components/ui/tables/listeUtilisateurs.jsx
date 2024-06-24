@@ -24,7 +24,7 @@ export const ListeUtilisateurs = ({donnees, setDonnees}) => {
             }
         catch (exception){
           console.log(exception)
-          toast("Une erreur s'est produite")
+          toast.error(<p className="text-redColor">{t('Une erreur s\'est produite')}</p>);
         }
     }
 

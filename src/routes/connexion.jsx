@@ -32,18 +32,18 @@ function Connexion() {
       window.localStorage.setItem("nom", response.data.utilisateur.last_name);
       window.localStorage.setItem("role", response.data.role);
       window.location = "/"
+      
     }
     catch (exception){
       console.log(exception.response.status)
       if (exception.response.status === 401){
-        toast("Mot de passe Incorrecte");
+        toast.error(<p className="text-redColor">{t('Mot de passe Incorrecte')}</p>);
       }
       else if (exception.response.status = 404){
-        toast("Vous n'etes pas autorisés");
-
+        toast.error(<p className="text-redColor">{t('Vous n\'êtes pas autorisés')}</p>);
       }
       else {
-        toast("Une erreur s'est produite");
+        toast.error(<p className="text-redColor">{t('Une erreur s\'est produite')}</p>);
       }
     }
   }
@@ -63,7 +63,7 @@ function Connexion() {
               <div className="flex flex-col gap-3 w-full">
                 <div className="flex flex-row gap-2 bg-bgGreyColor px-4 py-3 text-sm w-full font-light rounded-md">
                   <img src={Person} alt="" />
-                  <input type="text" value={nom_utilisateur} onChange={(e) => setNomUtilisateur(e.target.value)} placeholder={t("Nom utilisateur")} name="nom_utilisateur" className="outline-none placeholder-inputTextColor bg-inherit" />
+                  <input type="text" value={nom_utilisateur} onChange={(e) => setNomUtilisateur(e.target.value)} placeholder={t("Identifiant")} name="nom_utilisateur" className="outline-none placeholder-inputTextColor bg-inherit" />
                 </div>
                 <div className="flex flex-row justify-between gap-2 bg-bgGreyColor px-4 py-3 text-sm w-full font-light rounded-md">
                   <div className="flex flex-row  gap-2">
@@ -75,7 +75,7 @@ function Connexion() {
                 
               </div>
               <div className="w-full flex flex-row align-center justify-center gap-2 cursor-pointer  text-sm font-md px-4 py-3 bg-gradient-to-b from-buttonGradientSecondary to-buttonGradientPrimary hover:bg-gradient-to-l  text-white font-normal rounded-md ">
-                <input type="submit" value={t("Connexion")} className="cursor-pointer text-white"/>
+                <input type="submit" onClick={(e) => connexion(e)} value={t("Connexion")} className="cursor-pointer text-white"/>
               </div>
 
             </form>

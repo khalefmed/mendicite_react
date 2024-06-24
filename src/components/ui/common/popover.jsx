@@ -38,7 +38,7 @@ export default function MenuCompte() {
           >
             <PopoverPanel dir='ltr'
               anchor="bottom"
-              className="divide-y bg-white rounded-xl   [--anchor-gap:var(--spacing-5)]  shadow-xl"
+              className="divide-y bg-white rounded-xl   [--anchor-gap:var(--spacing-5)]  shadow-xl font-arabic"
             >
                 <div className=' flex flex-col text-sm text-textGreyColor' dir={ i18n.language == "ar" ? 'rtl' : 'ltr'}> 
                     <a href='/profil' className='flex flex-row gap-2 px-4 pt-4 pb-2 hover:text-blackColor hover:bg-bgGreyColor cursor-pointer items-center duratoion-500'>

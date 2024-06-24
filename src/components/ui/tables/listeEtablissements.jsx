@@ -18,7 +18,7 @@ export const ListeEtablissements = ({donnees, setDonnees}) => {
 
     const supprimer = async (id)  => {
         try {
-            const response = await api.delete(`etablissement/${id}/`); 
+            const response = await api.delete(`etablissements/${id}/`); 
             const  d = donnees.filter((e) => {
                 return e.id !== id;
             });
@@ -26,7 +26,7 @@ export const ListeEtablissements = ({donnees, setDonnees}) => {
             }
         catch (exception){
           console.log(exception)
-          toast("Une erreur s'est produite")
+          toast.error(<p className="text-redColor">{t('Une erreur s\'est produite')}</p>);
         }
     }
 

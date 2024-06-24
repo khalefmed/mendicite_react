@@ -26,7 +26,7 @@ export const ListeCheques = ({donnees, setDonnees}) => {
             }
         catch (exception){
           console.log(exception)
-          toast("Une erreur s'est produite")
+          toast.error(<p className="text-redColor">{t('Une erreur s\'est produite')}</p>);
         }
     }
 
@@ -46,7 +46,7 @@ export const ListeCheques = ({donnees, setDonnees}) => {
                         <td className='py-4 text-center text-textGreyColor font-normal text-xs '>{e.nom_cheque}</td>
                         <td className='py-4 text-center text-textGreyColor font-normal text-xs '>{e.montant}</td>
                         <td className='py-4 w-60 flex flex-row gap-1 justify-center align-center  text-center text-textGreyColor font-normal  rounded-lg'>
-                            <ModifierBoutton lien="salaries" id={e.id} />
+                            <ModifierBoutton lien="cheques" id={e.id} />
                             <Supprimer supprimer={supprimer} id={e.id}/>
                         </td>
                     </tr>

@@ -16,7 +16,7 @@ export const MyNavLink = ({route, label, icon: Icon}) => {
                       // ? "flex items-center gap-2 px-[15px] py-[10px] rounded-sm w-[200px] bg-gradient-to-b from-buttonGradientSecondary to-buttonGradientPrimary text-white font-normal fill-whiteColor"
                       : "flex items-center gap-2 fill-textGreyColor px-[15px] py-[10px] rounded-sm w-[200px] hover:bg-bgGreyColor"
                   }>
-                  <Icon size={15} />
+                  <Icon size={20} />
 
                   <p>{label}</p>
                 </NavLink>

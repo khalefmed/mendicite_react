@@ -33,7 +33,7 @@ function Banques() {
     }
     catch (exception){
       console.log(exception)
-      toast("Une erreur s'est produite")
+      toast.error(<p className="text-redColor">{t('Une erreur s\'est produite')}</p>);
     }
   }
 
@@ -47,7 +47,7 @@ function Banques() {
     }
     catch (exception){
       console.log(exception)
-      toast("Une erreur s'est produite")
+      toast.error(<p className="text-redColor">{t('Une erreur s\'est produite')}</p>);
     }
   }
 

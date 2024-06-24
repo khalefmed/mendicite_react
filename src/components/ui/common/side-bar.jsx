@@ -15,11 +15,6 @@ import { BsBank2 } from "react-icons/bs";
 function SideBar(props) {
   const { i18n, t } = useTranslation();
 
-  const switchLanguage = lang => {
-    window.localStorage.setItem("lang", lang);
-    window.location.reload();
-  };
-
   const role = localStorage.getItem("role");
 
   if(role == null){
@@ -46,8 +41,8 @@ function SideBar(props) {
             />
           </div>
           <nav className="text-[12px]  pr-10 pl-10">
-            <ul className="flex flex-col items-start gap-[15px] mx-auto list-none font-fr ">
-              <MyNavLink route="acceuil" label={t("Acceuil")} icon={IoHome}/>
+            <ul className="flex flex-col items-start gap-[15px] mx-auto list-none">
+              <MyNavLink route="" label={t("Acceuil")} icon={IoHome}/>
               {role == "Administrateur" || role == "Agent Trésor" ? <MyNavLink route="etablissements" label={t("Etablissements")} icon={IoMdBusiness}/> : <></>}
               {role != "Administrateur" && role != "Agent Trésor" ? <MyNavLink route="salaries" label={t("Salariés")} icon={MdGroups}/> : <></>}
               {role == "Administrateur" || role == "Agent Trésor" ? <MyNavLink route="banques" label={t("Banques")} icon={BsBank2}/> : <></> }

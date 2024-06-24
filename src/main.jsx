@@ -9,11 +9,24 @@ import Etablissements from "./routes/etablissements";
 import Deconnexion from "./routes/deconnexion";
 import Connexion from "./routes/connexion";
 import HomePage from "./routes/home-page";
-import EtablissementDetails from "./routes/etablissement_modifier";
+import { ModifierEtablissement } from "./routes/modifier_etablissement";
 import Banques from "./routes/banques";
 import Salaries from "./routes/salaries";
 import Cheques from "./routes/cheques";
 import Utilisateurs from "./routes/utilisateurs";
+import { CreerEtablissement } from "./routes/creer_etablissement";
+import { CreerBanque } from "./routes/creer_banque";
+import { CreerCheque } from "./routes/creer_cheque";
+import { CreerUtilisateur } from "./routes/creer_utilisateur";
+import { CreerSalarie } from "./routes/creer_salarie";
+import { ModifierBanque } from "./routes/modifier_banque";
+import { ModifierCheque } from "./routes/modifier_cheque";
+import { ModifierSalarie } from "./routes/modifier_salarie";
+import { MotDePasse } from "./routes/mot_de_passe";
+import { Profil } from "./routes/profil";
+import { Index } from "./routes";
+
+
 
 const router = createBrowserRouter([
   {
@@ -22,11 +35,27 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Acceuil />,
+        element: <Index />,
       },
       {
         path: "/etablissements",
         element: <Etablissements />,
+      },
+      {
+        path: "/etablissements/creer",
+        element: <CreerEtablissement />,
+      },
+      {
+        path: "/etablissements/modifier/:id",
+        element: <ModifierEtablissement />,
+      },
+      {
+        path: "/banques/creer",
+        element: <CreerBanque />,
+      },
+      {
+        path: "/banques/modifier/:id",
+        element: <ModifierBanque />,
       },
       {
         path: "/banques",
@@ -37,16 +66,40 @@ const router = createBrowserRouter([
         element: <Salaries />,
       },
       {
+        path: "/salaries/creer",
+        element: <CreerSalarie />,
+      },
+      {
+        path: "/salaries/modifier/:id",
+        element: <ModifierSalarie />,
+      },
+      {
         path: "/cheques",
         element: <Cheques />,
+      },
+      {
+        path: "/cheques/creer",
+        element: <CreerCheque />,
+      },
+      {
+        path: "/cheques/modifier/:id",
+        element: <ModifierCheque />,
       },
       {
         path: "/utilisateurs",
         element: <Utilisateurs />,
       },
       {
-        path: "/etablissements/modifier/:id",
-        element: <EtablissementDetails />,
+        path: "/utilisateurs/creer",
+        element: <CreerUtilisateur />,
+      },
+      {
+        path: "/mot_de_passe",
+        element: <MotDePasse />,
+      },
+      {
+        path: "/profil",
+        element: <Profil />,
       },
       {
         path: "/deconnexion",

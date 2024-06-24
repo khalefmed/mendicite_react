@@ -34,7 +34,7 @@ function Cheques() {
     }
     catch (exception){
       console.log(exception)
-      toast("Une erreur s'est produite")
+      toast.error(<p className="text-redColor">{t('Une erreur s\'est produite')}</p>);
     }
   }
 
@@ -48,7 +48,7 @@ function Cheques() {
     }
     catch (exception){
       console.log(exception)
-      toast("Une erreur s'est produite")
+      toast.error(<p className="text-redColor">{t('Une erreur s\'est produite')}</p>);
     }
   }
 
@@ -56,7 +56,7 @@ function Cheques() {
   return (
     <div className="flex flex-col gap-10 px-10 ">
       <div className="w-full flex flex-row max-sm:flex-col max-sm:gap-3 justify-between ">
-        <StatsCard titre={t("Total des cheques")} label={t("Cheques")} valeur={statistiques.total} icon={BsBank2}  />
+        <StatsCard titre={t("Total des cheques")} label={t("Chèques")} valeur={statistiques.total} icon={BsBank2}  />
         <StatsCard titre={t("Nombre de comptes")} label={t("Comptes")} valeur={statistiques.nombre_comptes} icon={FaMoneyBillWave}  />
         <StatsCard titre={t("Moyenne des salaires")} label={t("MRU")} valeur={statistiques.moyenne} icon={FaMoneyBillWave}  />
       </div>
@@ -66,7 +66,6 @@ function Cheques() {
         <NouveauBoutton lien="cheques"/>
       </div>
       {liste && <ListeCheques donnees={liste} setDonnees={setListe}/>}
-
     </div>
   );
 }

@@ -72,7 +72,7 @@ function HomePage() {
         <Outlet  />
       </div>
        
-        <Toaster position="top-right" />
+        <Toaster />
       </div>
   );
 }
