@@ -41,8 +41,8 @@ export const ListeEtablissements = ({donnees, setDonnees}) => {
                 <tbody className=''>
                     {donnees.map((e) => 
                     <tr key={e.id} className='bg-whiteColor'>
-                        <td className='py-4 text-center text-textGreyColor font-normal text-xs rounded-lg'>{e.code_etablissement}</td>
-                        <td className='py-4 text-center text-textGreyColor font-normal text-xs '>{e.nom_etablissement}</td>
+                        <td className='py-4 min-w-[100px] text-center text-textGreyColor font-normal text-xs rounded-lg'>{e.code_etablissement}</td>
+                        <td className='py-4 min-w-[300px] text-center text-textGreyColor font-normal text-xs '>{e.nom_etablissement}</td>
                         <td className='py-4 w-60 flex flex-row gap-1 justify-center align-center  text-center text-textGreyColor font-normal  rounded-lg'>
                             <ModifierBoutton lien="etablissements" id={e.id} />
                             <Supprimer supprimer={supprimer} id={e.id}/>

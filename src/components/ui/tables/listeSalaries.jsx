@@ -44,11 +44,11 @@ export const ListeSalarie = ({donnees, setDonnees}) => {
                 <tbody className=''>
                     {donnees.map((e) => 
                     <tr key={e.id} className='bg-whiteColor'>
-                        <td className='py-4 text-center text-textGreyColor font-normal text-xs rounded-lg'>{e.nom_salarie}</td>
-                        <td className='py-4 text-center text-textGreyColor font-normal text-xs '>{e.nni}</td>
-                        <td className='py-4 text-center text-textGreyColor font-normal text-xs '>{e.salaire}</td>
-                        <td className='py-4 text-center text-textGreyColor font-normal text-xs '>{e.banque.code_banque}</td>
-                        <td className='py-4 text-center text-textGreyColor font-normal text-xs '>{e.numero_compte}</td>
+                        <td className='py-4 min-w-[300px] text-center text-textGreyColor font-normal text-xs rounded-lg'>{e.nom_salarie}</td>
+                        <td className='py-4 min-w-[200px] text-center text-textGreyColor font-normal text-xs '>{e.nni}</td>
+                        <td className='py-4 min-w-[100px] text-center text-textGreyColor font-normal text-xs '>{e.salaire}</td>
+                        <td className='py-4 min-w-[100px] text-center text-textGreyColor font-normal text-xs '>{e.banque.code_banque}</td>
+                        <td className='py-4 min-w-[100px] text-center text-textGreyColor font-normal text-xs '>{e.numero_compte}</td>
                         <td className='py-4 w-60 flex flex-row gap-1 justify-center align-center  text-center text-textGreyColor font-normal  rounded-lg'>
                             <ModifierBoutton lien="salaries" id={e.id} />
                             <Supprimer supprimer={supprimer} id={e.id}/>

@@ -1,7 +1,6 @@
 import {useState, useEffect} from 'react'
 import { useTranslation } from "react-i18next";
 import { api } from "@/lib/api";
-
 import Supprimer from '../common/supprimer';
 import toast, { Toaster } from 'react-hot-toast';
 import { ModifierBoutton } from '../shared/modifier_boutton';
@@ -35,15 +34,15 @@ export const ListeUtilisateurs = ({donnees, setDonnees}) => {
                     <th className='py-4 text-center text-blackColor font-semibold text-sm rounded-tl-lg'>{t("Nom Complet")}</th>
                     <th className='py-4 text-center text-blackColor font-semibold text-sm '>{t("Telephone")}</th>
                     <th className='py-4 text-center text-blackColor font-semibold text-sm '>{t("Etablissement")}</th>
-                    <th className='py-4 text-center w-52 text-blackColor font-semibold text-sm rounded-tr-lg '>{t("Action")}</th>
+                    <th className='py-4 text-center w-40 text-blackColor font-semibold text-sm rounded-tr-lg '>{t("Action")}</th>
                 </thead>
                 <tbody className=''>
                     {donnees.map((e) => 
                     <tr key={e.id} className='bg-whiteColor'>
-                        <td className='py-4 text-center text-textGreyColor font-normal text-xs rounded-lg'>{e.first_name} {e.last_name}</td>
-                        <td className='py-4 text-center text-textGreyColor font-normal text-xs '>{e.telephone}</td>
-                        <td className='py-4 text-center text-textGreyColor font-normal text-xs '>{e.etablissement ? e.etablissement.code_etablissement : t("Trésor")}</td>
-                        <td className='py-4 w-60 flex flex-row gap-1 justify-center align-center  text-center text-textGreyColor font-normal  rounded-lg'>
+                        <td className='py-4 min-w-[250px] text-center text-textGreyColor font-normal text-xs rounded-lg'>{e.first_name} {e.last_name}</td>
+                        <td className='py-4 min-w-[100px] text-center text-textGreyColor font-normal text-xs '>{e.telephone}</td>
+                        <td className='py-4 min-w-[150px] text-center text-textGreyColor font-normal text-xs '>{e.etablissement ? e.etablissement.code_etablissement : t("Trésor")}</td>
+                        <td className='py-4 w-40 flex flex-row gap-1 justify-center align-center  text-center text-textGreyColor font-normal  rounded-lg'>
                             {/* <ModifierBoutton lien="utilisateurs" id={e.id} /> */}
                             <Supprimer supprimer={supprimer} id={e.id}/>
                         </td>

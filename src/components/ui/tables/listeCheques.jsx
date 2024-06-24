@@ -34,17 +34,17 @@ export const ListeCheques = ({donnees, setDonnees}) => {
         <div className='w-full overflow-x-scroll'>
             <table className='w-full border-separate border-spacing-y-2'>
                 <thead className='bg-whiteColor'>
-                    <th className='py-4 text-center text-blackColor font-semibold text-sm '>{t("Numero")}</th>
-                    <th className='py-4 text-center text-blackColor font-semibold text-sm '>{t("Nom")}</th>
-                    <th className='py-4 text-center text-blackColor font-semibold text-sm '>{t("Montant")}</th>
-                    <th className='py-4 text-center w-52 text-blackColor font-semibold text-sm rounded-tr-lg '>{t("Action")}</th>
+                    <th className='py-4  text-center text-blackColor font-semibold text-sm '>{t("Numero")}</th>
+                    <th className='py-4 min-w-[200px] text-center text-blackColor font-semibold text-sm '>{t("Nom")}</th>
+                    <th className='py-4 min-w-[100px] text-center text-blackColor font-semibold text-sm '>{t("Montant")}</th>
+                    <th className='py-4  text-center w-52 text-blackColor font-semibold text-sm rounded-tr-lg '>{t("Action")}</th>
                 </thead>
                 <tbody className=''>
                     {donnees.map((e) => 
                     <tr key={e.id} className='bg-whiteColor'>
-                        <td className='py-4 text-center text-textGreyColor font-normal text-xs rounded-lg'>{e.numero_cheque}</td>
-                        <td className='py-4 text-center text-textGreyColor font-normal text-xs '>{e.nom_cheque}</td>
-                        <td className='py-4 text-center text-textGreyColor font-normal text-xs '>{e.montant}</td>
+                        <td className='py-4 min-w-[100px] text-center text-textGreyColor font-normal text-xs rounded-lg'>{e.numero_cheque}</td>
+                        <td className='py-4 min-w-[200px] text-center text-textGreyColor font-normal text-xs '>{e.nom_cheque}</td>
+                        <td className='py-4 min-w-[100px] text-center text-textGreyColor font-normal text-xs '>{e.montant}</td>
                         <td className='py-4 w-60 flex flex-row gap-1 justify-center align-center  text-center text-textGreyColor font-normal  rounded-lg'>
                             <ModifierBoutton lien="cheques" id={e.id} />
                             <Supprimer supprimer={supprimer} id={e.id}/>
