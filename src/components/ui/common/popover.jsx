@@ -19,8 +19,8 @@ export default function MenuCompte() {
         <Popover dir='ltr' >
           <PopoverButton className="text-sm/6 font-semibold text-white/50 focus:outline-none  ">
                 <div className='flex flex-row justify-end gap-2 items-center cursor-pointer '>
-                    <div className='w-[27px] h-[27px]   rounded-full'>
-                        <img src={Account}  className="rounded-full border-1 border-blackColor " alt="" />
+                    <div className='w-[27px] h-[27px] rounded-full'>
+                        <img src={Account} height={30}  className="rounded-full border-1 border-blackColor " alt="" />
                     </div>
                     <div className='flex flex-col items-start justify-center align-center gap-0 max-sm:hidden'>
                         <p className='font-semibold text-blackColor text-xs'>{prenom} {nom}</p>

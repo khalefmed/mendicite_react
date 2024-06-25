@@ -25,6 +25,10 @@ import { ModifierSalarie } from "./routes/modifier_salarie";
 import { MotDePasse } from "./routes/mot_de_passe";
 import { Profil } from "./routes/profil";
 import { Index } from "./routes";
+import Etats from "./routes/etats";
+import EtatsEtablissement from "./routes/etats_etablissement";
+import { CreerEtat } from "./routes/creer_etat";
+import { EtatDetails } from "./routes/etat_detail";
 
 
 
@@ -84,6 +88,22 @@ const router = createBrowserRouter([
       {
         path: "/cheques/modifier/:id",
         element: <ModifierCheque />,
+      },
+      {
+        path: "/etats",
+        element: <Etats />,
+      },
+      {
+        path: "/etats_etablissement",
+        element: <EtatsEtablissement />,
+      },
+      {
+        path: "/etats/creer",
+        element: <CreerEtat />,
+      },
+      {
+        path: "/etats/:id",
+        element: <EtatDetails />,
       },
       {
         path: "/utilisateurs",

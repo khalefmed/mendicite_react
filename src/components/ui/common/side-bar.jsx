@@ -9,10 +9,11 @@ import { MdGroups } from "react-icons/md";
 import { FaUsers } from "react-icons/fa";
 import { FaMoneyCheck } from "react-icons/fa";
 import { BsBank2 } from "react-icons/bs";
+import { ImCancelCircle } from "react-icons/im";
+import { FaMoneyBillWave } from "react-icons/fa6";
 
 
-
-function SideBar(props) {
+function SideBar({changeVisibility}) {
   const { i18n, t } = useTranslation();
 
   const role = localStorage.getItem("role");
@@ -33,6 +34,10 @@ function SideBar(props) {
         className="w-[250px]  max-sm:absolute top-0 left sideBar justify-start h-[100vh] text-textGreyColor font-semibold max-lg:hidden max-sm:hidden max-md:hidden">
         <div
           className={i18n.language == "ar" ? arabicAnimation : frenshAnimation}>
+            <div className={`lg-hidden px-10 h-fit flex justify-end text-blackColor`} onClick={changeVisibility}>
+              <ImCancelCircle size={25} className="lg:hidden"/>
+            </div>
+
           <div className="flex items-center justify-center">
             <img
               className="w-[100px] aspect-square"
@@ -48,6 +53,7 @@ function SideBar(props) {
               {role == "Administrateur" || role == "Agent Trésor" ? <MyNavLink route="banques" label={t("Banques")} icon={BsBank2}/> : <></> }
               {role == "Administrateur" ? <MyNavLink route="utilisateurs" label={t("Utilisateurs")} icon={FaUsers}/> : <></>}
               {role == "Administrateur" || role == "Agent Trésor" ? <MyNavLink route="cheques" label={t("Chèques")} icon={FaMoneyCheck}/> : <></> }
+              {role == "Administrateur" || role == "Agent Trésor" ? <MyNavLink route="etats" label={t("Etats")} icon={FaMoneyBillWave}/> : <MyNavLink route="etats_etablissement" label={t("Etats")} icon={FaMoneyBillWave}/> }
               
 
             </ul>
