@@ -41,7 +41,7 @@ export const CreerUtilisateur = () => {
                     'last_name' : nom,
                     'username' : nom_utilisateur,
                     'telephone' : telephone,
-                    'password' : '12345678',
+                    'password' : telephone,
                     'etablissement' : etablissement.id
                   }
                   ); 

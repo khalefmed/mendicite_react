@@ -8,7 +8,6 @@ export const  Deconnexion = () => {
     window.location = "/connexion"
     return (
         <div>
-            Deconnexion 
         </div>
     )
 }

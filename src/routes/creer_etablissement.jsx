@@ -9,6 +9,7 @@ export const CreerEtablissement = () => {
 
     const [code, setCode] = useState("");
     const [nom, setNom] = useState("");
+    const [lien, setLien] = useState("");
 
     const creer = async (e)  => {
         e.preventDefault();
@@ -19,6 +20,7 @@ export const CreerEtablissement = () => {
                   {
                       "code_etablissement" : code,
                       "nom_etablissement" : nom ,
+                      "url_fichier" : lien ,
                   }
                   ); 
                   window.location = "/etablissements"
@@ -55,6 +57,10 @@ export const CreerEtablissement = () => {
                 <div>
                     <p  className='text-lg  text-blackColor font-semibold'>{t('Nom')}</p>
                     <input type="text" value={nom} onChange={(e) => setNom(e.target.value)} placeholder={t("Entrez le nom de l'entreprise")} className="px-4 py-2 w-full bg-inputFieldColor rounded-lg outline-none placeholder-inputTextColor font-medium" />
+                </div>
+                <div>
+                    <p  className='text-lg  text-blackColor font-semibold'>{t('Lien du fichier')}</p>
+                    <input type="text" value={lien} onChange={(e) => setLien(e.target.value)} placeholder={t("Entrez le lien du fichier")} className="px-4 py-2 w-full bg-inputFieldColor rounded-lg outline-none placeholder-inputTextColor font-medium" />
                 </div>
 
                 <input type="submit" onClick={creer} value={t("Créer l'entreprise")}  className="w-full rounded text-center py-2 mt-2 bg-gradient-to-b from-buttonGradientSecondary to-buttonGradientPrimary text-whiteColor font-medium cursor-pointer " />

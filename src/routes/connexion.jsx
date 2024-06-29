@@ -9,6 +9,7 @@ import EyeSlashed from "../assets/icons/eye_slashed.svg";
 import { useTranslation } from "react-i18next";
 import { api } from "@/lib/api";
 import { toast, Toaster } from "react-hot-toast";
+import Spinner from "@/components/ui/shared/spinner";
 
 
 
@@ -17,12 +18,14 @@ function Connexion() {
   const {t} = useTranslation()
   const [nom_utilisateur, setNomUtilisateur] = useState();
   const [mot_de_passe, setMotDePasse] = useState();
+  const [en_cours, setEnCours] = useState(false);
 
   const [show, setShow] = useState(false)
 
   const connexion = async (e) => {
     e.preventDefault()
     try {
+      setEnCours(true)
       const response = await api.post("connexion/", {
         "telephone" : nom_utilisateur,
         "mot_de_passe" : mot_de_passe
@@ -35,6 +38,7 @@ function Connexion() {
       
     }
     catch (exception){
+      setEnCours(false)
       console.log(exception.response.status)
       if (exception.response.status === 401){
         toast.error(<p className="text-redColor">{t('Mot de passe Incorrecte')}</p>);
@@ -74,8 +78,10 @@ function Connexion() {
                 </div>
                 
               </div>
-              <div className="w-full flex flex-row align-center justify-center gap-2 cursor-pointer  text-sm font-md px-4 py-3 bg-gradient-to-b from-buttonGradientSecondary to-buttonGradientPrimary hover:bg-gradient-to-l  text-white font-normal rounded-md ">
-                <input type="submit" onClick={(e) => connexion(e)} value={t("Connexion")} className="cursor-pointer text-white"/>
+              <div className="w-full flex flex-row align-center items-center justify-center gap-2 cursor-pointer  text-sm font-medium px-4 py-3 bg-gradient-to-b from-buttonGradientSecondary to-buttonGradientPrimary hover:bg-gradient-to-l  text-white font-normal rounded-md ">
+                {en_cours ? <Spinner color="white" /> : <></>}
+                <input type="submit" onClick={(e) => connexion(e)} value={t("Connexion")} className="cursor-pointer w-full text-white font-medium"/>
+                <span></span>
               </div>
 
             </form>

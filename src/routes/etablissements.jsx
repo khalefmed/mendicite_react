@@ -1,7 +1,7 @@
 import {useState, useEffect} from 'react'
 import { StatsCard } from "@/components/ui/shared/statsCard";
 import Company  from "../assets/icons/company.svg";
-import { ListeEtablissements } from "@/components/ui/tables/listeEtablissements";
+import { ListeEtablissements } from "@/components/ui/listes/listeEtablissements";
 import { api } from "@/lib/api";
 import toast, { Toaster } from 'react-hot-toast';
 import { useTranslation } from "react-i18next";

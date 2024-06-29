@@ -39,9 +39,9 @@ export const ListeUtilisateurs = ({donnees, setDonnees}) => {
                 <tbody className=''>
                     {donnees.map((e) => 
                     <tr key={e.id} className='bg-whiteColor'>
-                        <td className='py-4 min-w-[250px] text-center text-textGreyColor font-normal text-xs rounded-lg'>{e.first_name} {e.last_name}</td>
-                        <td className='py-4 min-w-[100px] text-center text-textGreyColor font-normal text-xs '>{e.telephone}</td>
-                        <td className='py-4 min-w-[150px] text-center text-textGreyColor font-normal text-xs '>{e.etablissement ? e.etablissement.code_etablissement : t("Trésor")}</td>
+                        <td className='py-4 min-w-[250px] text-center text-textGreyColor font-medium text-sm rounded-lg'>{e.first_name} {e.last_name}</td>
+                        <td className='py-4 min-w-[100px] text-center text-textGreyColor font-medium text-sm '>{e.telephone}</td>
+                        <td className='py-4 min-w-[150px] text-center text-textGreyColor font-medium text-sm '>{e.etablissement ? e.etablissement.code_etablissement : t("Trésor")}</td>
                         <td className='py-4 w-40 flex flex-row gap-1 justify-center align-center  text-center text-textGreyColor font-normal  rounded-lg'>
                             {/* <ModifierBoutton lien="utilisateurs" id={e.id} /> */}
                             <Supprimer supprimer={supprimer} id={e.id}/>

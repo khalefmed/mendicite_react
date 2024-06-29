@@ -9,10 +9,10 @@ import toast, { Toaster } from 'react-hot-toast';
 import { useTranslation } from "react-i18next";
 import { Recherche } from '@/components/ui/shared/recherche';
 import { NouveauBoutton } from '@/components/ui/shared/nouveau_boutton';
-import { ListeBanques } from '@/components/ui/tables/listeBanques';
+import { ListeBanques } from '@/components/ui/listes/listeBanques';
 import { BsBank2 } from 'react-icons/bs';
 import { FaMoneyBillWave } from 'react-icons/fa';
-import { ListeUtilisateurs } from '@/components/ui/tables/listeUtilisateurs';
+import { ListeUtilisateurs } from '@/components/ui/listes/listeUtilisateurs';
 
 
 function Utilisateurs() {

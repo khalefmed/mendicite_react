@@ -7,7 +7,7 @@ const Supprimer = ({supprimer, id}) => {
     const { i18n, t } = useTranslation();
   return <AlertDialog.Root>
     <AlertDialog.Trigger asChild>
-      <button className='px-3 py-2 min-w-24 flex flex-row items-center gap-1 rounded-md border border-1 border-redColor text-redColor hover:bg-redColor hover:text-whiteColor duration-500 font-light'>
+      <button className='px-3 py-2 min-w-24 flex flex-row items-center jutsify-center align-center gap-1 rounded-md border border-1 border-redColor text-redColor hover:bg-redColor hover:text-whiteColor duration-500 text-lg font-medium'>
         <MdDelete size={13}/>
         <span className='text-xs'>{t("Supprimer")}</span>
         </button>

@@ -1,5 +1,6 @@
+import EtablissementChoix from '@/components/ui/common/EtablissementChoix';
 import { api } from '@/lib/api';
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import { toast } from 'react-hot-toast';
 import { useTranslation } from 'react-i18next'
 
@@ -9,6 +10,24 @@ export const CreerCheque = () => {
 
     const [numero, setNumero] = useState("");
     const [nom, setNom] = useState("");
+    const [etablissement, setEtablissement] = useState({"id" : null, "nom_etablissement" : t("Choisissez un établissement")});
+    const [etablissements, setEtablissements] = useState([]);
+
+    useEffect(() => {
+        get();
+    }, [])
+
+    const get = async ()  => {
+        try {
+          const response = await api.get("etablissements/"); 
+          setEtablissements(response.data.liste)
+        }
+        catch (exception){
+          console.log(exception)
+          toast.error(<p className="text-redColor">{t('Une erreur s\'est produite')}</p>);
+        }
+    }
+
 
     const creer = async (e)  => {
         e.preventDefault();
@@ -19,6 +38,7 @@ export const CreerCheque = () => {
                   {
                       "numero_cheque" : numero,
                       "nom_cheque" : nom,
+                      "etablissement" : etablissement.id,
                   }
                   ); 
                   window.location = "/cheques"
@@ -37,7 +57,7 @@ export const CreerCheque = () => {
 
 
     const valider = () => {
-        if (numero == "" || nom == ""){
+        if (numero == "" || nom == "" || etablissement.id == null){
             return false;
         }
         return true;
@@ -55,6 +75,10 @@ export const CreerCheque = () => {
                 <div>
                     <p  className='text-lg  text-blackColor font-semibold'>{t('Nom')}</p>
                     <input type="text" value={nom} onChange={(e) => setNom(e.target.value)} placeholder={t("Entrez le nom du chèque")} className="px-4 py-2 w-full bg-inputFieldColor rounded-lg outline-none placeholder-inputTextColor font-medium" />
+                </div>
+                <div>
+                    <p  className='text-lg  text-blackColor font-semibold'>{t('Etablissement')}</p>
+                    <EtablissementChoix etablissement={etablissement} setEtablissement={setEtablissement} etablissements={etablissements}/>
                 </div>
 
                 <input type="submit" onClick={creer} value={t("Créer le chèque")}  className="w-full rounded text-center py-2 mt-2 bg-gradient-to-b from-buttonGradientSecondary to-buttonGradientPrimary text-whiteColor font-medium cursor-pointer " />

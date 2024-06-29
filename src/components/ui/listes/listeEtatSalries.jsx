@@ -28,9 +28,9 @@ export const ListeEtatsSalaries = ({donnees}) => {
                 <tbody className=''>
                     {donnees.map((e) => 
                     <tr key={e.id} className='bg-whiteColor'>
-                        <td className='py-4 min-w-[100px] text-center text-textGreyColor font-normal text-xs rounded-lg'>{e.salarie.nom_salarie}</td>
-                        <td className='py-4 min-w-[300px] text-center text-textGreyColor font-normal text-xs '>{e.salarie.nni}</td>
-                        <td className='py-4 min-w-[300px] text-center text-textGreyColor font-normal text-xs '>{e.montant_net}</td>
+                        <td className='py-4 min-w-[100px] text-center text-textGreyColor font-medium text-sm rounded-lg'>{e.salarie.nom_salarie}</td>
+                        <td className='py-4 min-w-[300px] text-center text-textGreyColor font-medium text-sm '>{e.salarie.nni}</td>
+                        <td className='py-4 min-w-[300px] text-center text-textGreyColor font-medium text-sm '>{e.montant_net}</td>
                         
                     </tr>
                     )}

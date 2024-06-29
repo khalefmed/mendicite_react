@@ -1,4 +1,5 @@
 import ChequesChoix from '@/components/ui/common/ChequesChoix';
+import Spinner from '@/components/ui/shared/spinner';
 import { api } from '@/lib/api';
 import {useState, useEffect} from 'react'
 import { toast } from 'react-hot-toast';
@@ -11,6 +12,7 @@ export const CreerEtat = () => {
     const [cheque, setCheque] = useState({'id' : null, 'nom_cheque' : t('Choisissez un chèque')});
     const [nom, setNom] = useState("");
     const [cheques, setCheques] = useState([]);
+    const [en_cours, setEnCours] = useState(false);
 
     useEffect(() => {
         get();
@@ -31,6 +33,7 @@ export const CreerEtat = () => {
     const creer = async (e)  => {
         e.preventDefault();
         if (valider()) {
+            setEnCours(true)
             try {
                 const response = await api.post(
                   "creer_etat/",
@@ -42,6 +45,7 @@ export const CreerEtat = () => {
                   window.location = "/etats_etablissement"
               }
               catch (exception){
+                setEnCours(false)
                 console.log(exception)
                 toast.error(<p className="text-redColor">{t('Une erreur s\'est produite')}</p>);
               }
@@ -71,7 +75,11 @@ export const CreerEtat = () => {
                     <input type="text" value={nom} onChange={(e) => setNom(e.target.value)} placeholder={t("Entrez le nom de l'etat")} className="px-4 py-2 w-full bg-inputFieldColor rounded-lg outline-none placeholder-inputTextColor font-medium" />
                 </div>
                 <ChequesChoix cheque={cheque} setCheque={setCheque} cheques={cheques} />
-                <input type="submit" onClick={creer} value={t("Créer l'etat")}  className="w-full rounded text-center py-2 mt-2 bg-gradient-to-b from-buttonGradientSecondary to-buttonGradientPrimary text-whiteColor font-medium cursor-pointer " />
+                <div className="w-full flex flex-row align-center items-center justify-center gap-2 cursor-pointer  text-sm font-medium px-4 py-3 bg-gradient-to-b from-buttonGradientSecondary to-buttonGradientPrimary hover:bg-gradient-to-l  text-white font-normal rounded-md ">
+                    {en_cours ? <Spinner color="white" /> : <></>}
+                    <input type="submit" onClick={(e) => creer(e)} value={t("Créer l'etat")} className="cursor-pointer w-full text-white font-medium"/>
+                    <span></span>
+                </div>
             </form>
 
         </div>

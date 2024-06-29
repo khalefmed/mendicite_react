@@ -8,7 +8,7 @@ import { Recherche } from '@/components/ui/shared/recherche';
 import { NouveauBoutton } from '@/components/ui/shared/nouveau_boutton';
 import { BsBank2 } from 'react-icons/bs';
 import { FaMoneyBillWave } from 'react-icons/fa';
-import { ListeSalarie } from '@/components/ui/tables/listeSalaries';
+import { ListeSalarie } from '@/components/ui/listes/listeSalaries';
 
 
 function Salaries() {

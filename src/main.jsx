@@ -8,7 +8,7 @@ import Acceuil from "./routes/acceuil";
 import Etablissements from "./routes/etablissements";
 import Deconnexion from "./routes/deconnexion";
 import Connexion from "./routes/connexion";
-import HomePage from "./routes/home-page";
+import HomePage from "./routes/app";
 import { ModifierEtablissement } from "./routes/modifier_etablissement";
 import Banques from "./routes/banques";
 import Salaries from "./routes/salaries";
@@ -29,6 +29,8 @@ import Etats from "./routes/etats";
 import EtatsEtablissement from "./routes/etats_etablissement";
 import { CreerEtat } from "./routes/creer_etat";
 import { EtatDetails } from "./routes/etat_detail";
+import '@radix-ui/themes/styles.css';
+import { Theme } from "@radix-ui/themes";
 
 
 
@@ -146,7 +148,10 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         dir={i18n.language === "ar" ? "rtl" : "ltr"}
         className={"mainElement " +(i18n.language == "ar" ? "font-arabic" : "font-fr")}
       >
-        <RouterProvider router={router} />
+        <Theme>
+          <RouterProvider router={router} />
+        </Theme>
+        
       </div>
     </I18nextProvider>
   </React.StrictMode>
