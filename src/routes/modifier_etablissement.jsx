@@ -11,6 +11,7 @@ export const ModifierEtablissement = () => {
 
     const [code, setCode] = useState("");
     const [nom, setNom] = useState("");
+    const [url_fichier, setUrlFichier] = useState("");
 
 
     useEffect(() => {
@@ -23,6 +24,7 @@ export const ModifierEtablissement = () => {
         const response = await api.get(`etablissements/${id}/`); 
         setCode(response.data.code_etablissement);
         setNom(response.data.nom_etablissement);
+        setUrlFichier(response.data.url_fichier);
       }
       catch (exception){
         console.log(exception)
@@ -39,6 +41,7 @@ export const ModifierEtablissement = () => {
                   {
                       "code_etablissement" : code,
                       "nom_etablissement" : nom ,
+                      "url_fichier" : url_fichier ,
                   }
                   ); 
                   window.location = "/etablissements"
@@ -75,6 +78,10 @@ export const ModifierEtablissement = () => {
                 <div>
                     <p  className='text-lg  text-blackColor font-semibold'>{t('Nom')}</p>
                     <input type="text" value={nom} onChange={(e) => setNom(e.target.value)} placeholder={t("Entrez le nom de l'entreprise")} className="px-4 py-2 w-full bg-inputFieldColor rounded-lg outline-none placeholder-inputTextColor font-medium" />
+                </div>
+                <div>
+                    <p  className='text-lg  text-blackColor font-semibold'>{t('Fichier')}</p>
+                    <input type="text" value={url_fichier} onChange={(e) => setUrlFichier(e.target.value)} placeholder={t("Entrez le nom de l'url du fichier excel")} className="px-4 py-2 w-full bg-inputFieldColor rounded-lg outline-none placeholder-inputTextColor font-medium" />
                 </div>
 
                 <input type="submit" onClick={modifier} value={t("Modifier l'entreprise")}  className="w-full rounded text-center py-2 mt-2 bg-gradient-to-b from-buttonGradientSecondary to-buttonGradientPrimary text-whiteColor font-medium cursor-pointer " />

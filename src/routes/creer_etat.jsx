@@ -67,7 +67,7 @@ export const CreerEtat = () => {
     
     return (
         <div className='p-10 mx-10 flex flex-col gap-3 bg-whiteColor rounded-lg shadow-xl shadow-shadowColor'>
-            <h1 className='text-2xl text-blackColor font-bold'>{t('Nouveau établissement')}</h1>
+            <h1 className='text-2xl text-blackColor font-bold'>{t('Nouveau  Etat')}</h1>
             <p className='text-lg max-sm:text-sm text-textGreyColor font-medium '>{t('Veuillez remplir les champs suivant pour créer un nouveau établissement')}</p>
             <form onSubmit={(e) => creer(e)} className='w-[400px] max-sm:w-full flex flex-col gap-4 '>
                 <div>

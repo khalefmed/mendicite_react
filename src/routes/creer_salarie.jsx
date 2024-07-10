@@ -81,7 +81,7 @@ export const CreerSalarie = () => {
                     <input type="text" value={nni} onChange={(e) => setNNI(e.target.value)} placeholder={t("Entrez le numero national")} className="px-4 py-2 w-full bg-inputFieldColor rounded-lg outline-none placeholder-inputTextColor font-medium" />
                 </div>
                 <div>
-                    <p  className='text-lg  text-blackColor font-semibold'>{t('Etablissement')}</p>
+                    <p  className='text-lg  text-blackColor font-semibold'>{t('Banque')}</p>
                     <BanquesChoix banque={banque} setBanque={setBanque} banques={banques}/>
                 </div>
                 <div>
