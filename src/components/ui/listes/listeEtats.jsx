@@ -37,7 +37,7 @@ export const ListeEtats = ({donnees, setDonnees, etablissement}) => {
                 <thead className='bg-whiteColor'>
                     <td className='py-4 text-center text-blackColor font-semibold text-sm rounded-tl-lg'>{t("Nom")}</td>
                     <td className='py-4 text-center text-blackColor font-semibold text-sm '>{t("Date")}</td>
-                    <td className='py-4 text-center text-blackColor font-semibold text-sm '>{t("Chèque")}</td>
+                    <td className='py-4 text-center text-blackColor font-semibold text-sm '>{t("Etablissement")}</td>
                     <td className='py-4 text-center w-52 text-blackColor font-semibold text-sm rounded-tr-lg '>{t("Action")}</td>
                 </thead>
                 <tbody className=''>
@@ -45,11 +45,11 @@ export const ListeEtats = ({donnees, setDonnees, etablissement}) => {
                     <tr key={e.id} className='bg-whiteColor'>
                         <td className='py-4 min-w-[300px] text-center text-textGreyColor font-medium text-sm rounded-lg'>{e.nom_etat}</td>
                         <td className='py-4 min-w-[100px] text-center text-textGreyColor font-medium text-sm '>{e.date_etat}</td>
-                        <td className='py-4 min-w-[3td00px] text-center text-textGreyColor font-medium text-sm '>{e.cheque.nom_cheque}</td>
+                        <td className='py-4 min-w-[3td00px] text-center text-textGreyColor font-medium text-sm '>{e.etablissement.nom_etablissement}</td>
                         <td className='py-4 w-60 flex flex-row gap-1 justify-center align-center  text-center text-textGreyColor font-normal  rounded-lg'>
                             {/* {etablissement ? <VoirButton lien="etats" id={e.id} /> : <></>} */}
                             <VoirButton lien="etats" id={e.id} />
-                            <Supprimer supprimer={supprimer} id={e.id}/>
+                            {etablissement ? <Supprimer supprimer={supprimer} id={e.id}/> : <></>}
                         </td>
                     </tr>
                     )}

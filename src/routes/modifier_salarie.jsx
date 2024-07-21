@@ -68,8 +68,8 @@ export const ModifierSalarie = () => {
 
     const get_ = async ()  => {
         try {
-          const response = await api.get("banques/"); 
-          setBanques(response.data.liste)
+          const response = await api.get("banque_active/"); 
+          setBanques(response.data)
         }
         catch (exception){
           console.log(exception)
@@ -89,7 +89,7 @@ export const ModifierSalarie = () => {
     
     return (
         <div className='p-10 mx-10 flex flex-col gap-3 bg-whiteColor rounded-lg shadow-xl shadow-shadowColor'>
-            <h1 className='text-2xl text-blackColor font-bold'>{t('Modifier l\'utilisateur')}</h1>
+            <h1 className='text-2xl text-blackColor font-bold'>{t('Modifier l\'etat')}</h1>
             <p className='text-lg max-sm:text-sm text-textGreyColor font-medium '>{t('Veuillez remplir les champs suivant pour modifier le salarié')}</p>
             <form onSubmit={(e) => modifier(e)} className='w-[400px] max-sm:w-full flex flex-col gap-4 '>
                 <div>

@@ -1,4 +1,6 @@
-import ChequesChoix from '@/components/ui/common/ChequesChoix';
+
+import EtablissementChoix from '@/components/ui/common/EtablissementChoix';
+import EtatsChoix from '@/components/ui/common/EtatsChoix';
 import Spinner from '@/components/ui/shared/spinner';
 import { api } from '@/lib/api';
 import {useState, useEffect} from 'react'
@@ -9,9 +11,9 @@ import { useTranslation } from 'react-i18next'
 export const CreerEtat = () => {
     const {t} = useTranslation();
 
-    const [cheque, setCheque] = useState({'id' : null, 'nom_cheque' : t('Choisissez un chèque')});
+    const [etablissement, setEtablissement] = useState({'id' : null, 'nom_etablissement' : t('Choisissez un établissement')});
     const [nom, setNom] = useState("");
-    const [cheques, setCheques] = useState([]);
+    const [etablissements, setEtablissements] = useState([]);
     const [en_cours, setEnCours] = useState(false);
 
     useEffect(() => {
@@ -20,8 +22,8 @@ export const CreerEtat = () => {
 
     const get = async ()  => {
         try {
-          const response = await api.get("cheques_etablissement/"); 
-          setCheques(response.data)
+          const response = await api.get("etablissements/"); 
+          setEtablissements(response.data.liste)
           console.log(response)
         }
         catch (exception){
@@ -39,7 +41,6 @@ export const CreerEtat = () => {
                   "creer_etat/",
                   {
                       "nom_etat" : nom,
-                      "cheque" : cheque.id ,
                   }
                   ); 
                   window.location = "/etats_etablissement"
@@ -59,7 +60,7 @@ export const CreerEtat = () => {
 
 
     const valider = () => {
-        if (cheque.id == null|| nom == ""){
+        if (nom == ""){
             return false;
         }
         return true;
@@ -74,8 +75,8 @@ export const CreerEtat = () => {
                     <p  className='text-lg  text-blackColor font-semibold'>{t('Nom')}</p>
                     <input type="text" value={nom} onChange={(e) => setNom(e.target.value)} placeholder={t("Entrez le nom de l'etat")} className="px-4 py-2 w-full bg-inputFieldColor rounded-lg outline-none placeholder-inputTextColor font-medium" />
                 </div>
-                <ChequesChoix cheque={cheque} setCheque={setCheque} cheques={cheques} />
-                <div className="w-full flex flex-row align-center items-center justify-center gap-2 cursor-pointer  text-sm font-medium px-4 py-3 bg-gradient-to-b from-buttonGradientSecondary to-buttonGradientPrimary hover:bg-gradient-to-l  text-white font-normal rounded-md ">
+                
+                <div className="w-full flex flex-row align-center items-center justify-center gap-2 cursor-pointer  text-sm  font-medium px-4 py-3 bg-gradient-to-b from-buttonGradientSecondary to-buttonGradientPrimary hover:bg-gradient-to-l  text-white  rounded-md ">
                     {en_cours ? <Spinner color="white" /> : <></>}
                     <input type="submit" onClick={(e) => creer(e)} value={t("Créer l'etat")} className="cursor-pointer w-full text-white font-medium"/>
                     <span></span>

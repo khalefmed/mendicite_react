@@ -56,7 +56,7 @@ function Etats() {
   return (
     <div className="flex flex-col gap-10 px-10 max-sm:px-4 ">
       <div className="w-full flex flex-row max-sm:flex-col max-sm:gap-3 justify-between ">
-        <StatsCard titre={t("Total des etats")} label={t("Etats")} valeur={statistiques.total} icon={BsBank2}  />
+        <StatsCard titre={t("Total des etats")} label={t("Etats")} valeur={statistiques.total} icon={FaMoneyBillWave}  />
         <StatsCard titre={t("Total des etats")} label={t("Etats")} valeur={statistiques.total} icon={FaMoneyBillWave}  />
         <StatsCard titre={t("Total des etats")} label={t("Etats")} valeur={statistiques.total} icon={FaMoneyBillWave}  />
       </div>

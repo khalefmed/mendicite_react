@@ -1,4 +1,5 @@
 import EtablissementChoix from '@/components/ui/common/EtablissementChoix';
+import EtatsChoix from '@/components/ui/common/EtatsChoix';
 import { api } from '@/lib/api';
 import {useState, useEffect} from 'react'
 import { toast } from 'react-hot-toast';
@@ -10,8 +11,8 @@ export const CreerCheque = () => {
 
     const [numero, setNumero] = useState("");
     const [nom, setNom] = useState("");
-    const [etablissement, setEtablissement] = useState({"id" : null, "nom_etablissement" : t("Choisissez un établissement")});
-    const [etablissements, setEtablissements] = useState([]);
+    const [etat, setEtat] = useState({"id" : null, "nom_etat" : t("Choisissez un état de salaire")});
+    const [etats, setEtats] = useState([]);
 
     useEffect(() => {
         get();
@@ -19,8 +20,8 @@ export const CreerCheque = () => {
 
     const get = async ()  => {
         try {
-          const response = await api.get("etablissements/"); 
-          setEtablissements(response.data.liste)
+          const response = await api.get("etats/"); 
+          setEtats(response.data.liste)
         }
         catch (exception){
           console.log(exception)
@@ -38,7 +39,7 @@ export const CreerCheque = () => {
                   {
                       "numero_cheque" : numero,
                       "nom_cheque" : nom,
-                      "etablissement" : etablissement.id,
+                      "etat" : etat.id,
                   }
                   ); 
                   window.location = "/cheques"
@@ -57,7 +58,7 @@ export const CreerCheque = () => {
 
 
     const valider = () => {
-        if (numero == "" || nom == "" || etablissement.id == null){
+        if (numero == "" || nom == "" || etat.id == null){
             return false;
         }
         return true;
@@ -70,15 +71,15 @@ export const CreerCheque = () => {
             <form onSubmit={(e) => creer(e)} className='w-[400px] max-sm:w-full flex flex-col gap-4 '>
                 <div>
                     <p  className='text-lg  text-blackColor font-semibold'>{t('Numero')}</p>
-                    <input type="text" value={numero} onChange={(e) => setNumero(e.target.value)} placeholder={t("Entrez le numero du cheque")} className="px-4 py-2 w-full bg-inputFieldColor rounded-lg outline-none placeholder-inputTextColor font-medium" />
+                    <input type="number" value={numero} onChange={(e) => setNumero(e.target.value)} placeholder={t("Entrez le numero du cheque")} className="px-4 py-2 w-full bg-inputFieldColor rounded-lg outline-none placeholder-inputTextColor font-medium" />
                 </div>
                 <div>
                     <p  className='text-lg  text-blackColor font-semibold'>{t('Nom')}</p>
                     <input type="text" value={nom} onChange={(e) => setNom(e.target.value)} placeholder={t("Entrez le nom du chèque")} className="px-4 py-2 w-full bg-inputFieldColor rounded-lg outline-none placeholder-inputTextColor font-medium" />
                 </div>
                 <div>
-                    <p  className='text-lg  text-blackColor font-semibold'>{t('Etablissement')}</p>
-                    <EtablissementChoix etablissement={etablissement} setEtablissement={setEtablissement} etablissements={etablissements}/>
+                    <p  className='text-lg  text-blackColor font-semibold'>{t('Etat')}</p>
+                    <EtatsChoix etat={etat} setEtat={setEtat} etats={etats} />
                 </div>
 
                 <input type="submit" onClick={creer} value={t("Créer le chèque")}  className="w-full rounded text-center py-2 mt-2 bg-gradient-to-b from-buttonGradientSecondary to-buttonGradientPrimary text-whiteColor font-medium cursor-pointer " />

@@ -31,6 +31,8 @@ export const ListeEtats = ({donnees, setDonnees, etablissement}) => {
         }
     }
 
+    console.log(etablissement)
+
     return (
         <div className='w-full overflow-x-scroll'>
             <table className='w-full border-separate border-spacing-y-2'>
@@ -47,8 +49,8 @@ export const ListeEtats = ({donnees, setDonnees, etablissement}) => {
                         <td className='py-4 min-w-[300px] text-center text-textGreyColor font-medium text-sm '>{e.date_etat}</td>
                         <td className='py-4 min-w-[300px] text-center text-textGreyColor font-medium text-sm '>{e.cheque.nom_cheque}</td>
                         <td className='py-4 w-60 flex flex-row gap-1 justify-center align-center  text-center text-textGreyColor font-normal  rounded-lg'>
-                            {etablissement ? <VoirButton lien="etats" id={e.id} /> : <></>}
-                            <Supprimer supprimer={supprimer} id={e.id}/>
+                            <VoirButton lien="etats" id={e.id} />
+                            {etablissement ?  <Supprimer supprimer={supprimer} id={e.id}/> : <></>}
                         </td>
                     </tr>
                     )}

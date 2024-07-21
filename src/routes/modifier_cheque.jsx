@@ -69,7 +69,7 @@ export const ModifierCheque = () => {
             <form onSubmit={(e) => modifier(e)} className='w-[400px] max-sm:w-full flex flex-col gap-4 '>
                 <div>
                     <p  className='text-lg  text-blackColor font-semibold'>{t('Numero')}</p>
-                    <input type="text" value={numero} onChange={(e) => setNumero(e.target.value)} placeholder={t("Entrez le numero du cheque")} className="px-4 py-2 w-full bg-inputFieldColor rounded-lg outline-none placeholder-inputTextColor font-medium" />
+                    <input type="number" value={numero} onChange={(e) => setNumero(e.target.value)} placeholder={t("Entrez le numero du cheque")} className="px-4 py-2 w-full bg-inputFieldColor rounded-lg outline-none placeholder-inputTextColor font-medium" />
                 </div>
                 <div>
                     <p  className='text-lg  text-blackColor font-semibold'>{t('Nom')}</p>

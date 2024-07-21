@@ -2,7 +2,7 @@ import { Popover, PopoverButton, PopoverPanel, Transition } from '@headlessui/re
 import Account from "../../../assets/icons/account_image.jpg";
 import { useTranslation } from "react-i18next";
 
-import { MdAccountCircle } from "react-icons/md";
+import { MdAccountCircle, MdEdit } from "react-icons/md";
 import { MdPassword } from "react-icons/md";
 import { IoLogOut } from "react-icons/io5";
 
@@ -48,6 +48,10 @@ export default function MenuCompte() {
                     <a href='/mot_de_passe' className='flex flex-row gap-2 px-4 py-3 hover:text-blackColor hover:bg-bgGreyColor cursor-pointer items-center duratoion-500'>
                         <MdPassword size={20} />
                         <span>{t('Mot de passe')}</span>
+                    </a>
+                    <a href='/modifier_informations' className='flex flex-row gap-2 px-4 py-3 hover:text-blackColor hover:bg-bgGreyColor cursor-pointer items-center duratoion-500'>
+                        <MdEdit size={20} />
+                        <span>{t('Modifier mes informations')}</span>
                     </a>
                     <a href='/deconnexion' className='flex flex-row gap-2 px-4 pb-4 pt-2 text-redColor hover:bg-bgGreyColor cursor-pointer items-center duratoion-500'>
                         <IoLogOut size={20} />

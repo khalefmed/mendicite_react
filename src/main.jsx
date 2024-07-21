@@ -31,6 +31,8 @@ import { CreerEtat } from "./routes/creer_etat";
 import { EtatDetails } from "./routes/etat_detail";
 import '@radix-ui/themes/styles.css';
 import { Theme } from "@radix-ui/themes";
+import { ModifierInformations } from "./routes/modifier_utilisateur";
+import ProtectedRoute from "./lib/auth";
 
 
 
@@ -45,7 +47,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/etablissements",
-        element: <Etablissements />,
+        element: <ProtectedRoute component={Etablissements} />,
       },
       {
         path: "/etablissements/creer",
@@ -118,6 +120,10 @@ const router = createBrowserRouter([
       {
         path: "/mot_de_passe",
         element: <MotDePasse />,
+      },
+      {
+        path: "/modifier_informations",
+        element: <ModifierInformations />,
       },
       {
         path: "/profil",

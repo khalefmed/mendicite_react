@@ -12,6 +12,8 @@ export const ListeCheques = ({donnees, setDonnees}) => {
     const { i18n, t } = useTranslation();
     const [liste, setListe] = useState(donnees)
 
+    const role = window.localStorage.getItem("role");
+
     useEffect(() => {
         setListe(liste)
     }, [])
@@ -47,7 +49,7 @@ export const ListeCheques = ({donnees, setDonnees}) => {
                         <td className='py-4 min-w-[100px] text-center text-textGreyColor font-medium text-sm '>{e.montant}</td>
                         <td className='py-4 w-60 flex flex-row gap-1 justify-center align-center  text-center text-textGreyColor font-normal  rounded-lg'>
                             <ModifierBoutton lien="cheques" id={e.id} />
-                            <Supprimer supprimer={supprimer} id={e.id}/>
+                            {/* {role == "Administrateur" ? <Supprimer supprimer={supprimer} id={e.id}/> : <></> } */}
                         </td>
                     </tr>
                     )}

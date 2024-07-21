@@ -21,6 +21,8 @@
   "Modifier": "تعديل",
   "Supprimer": "حذف",
 
+  "Etats" : "حالات الرواتب",
+
   "Moyenne des salaires": "متوسط الرواتب",
   "Nombre de salariés": "عدد الموظفين",
   "Total des etablissements": "إجمالي المؤسسات",
@@ -106,7 +108,15 @@
   "Veuillez remplir les champs suivant pour créer un nouveau salarié": "يرجى ملء الحقول التالية لإنشاء موظف جديد",
 
   "Entrez le nom du chèque": "أدخل اسم الشيك",
-  "Identifiant" : "معرف"
+  "Identifiant" : "معرف",
+
+  "Veuillez remplir les champs suivant pour modifier vos informations personnelles" : "يرجى ملء الحقول التالية لتعديل معلوماتكم ",
+  "Modification des informations" : "تعديل المعلومات",
+
+  "Montants" : "المبالغ",
+  "Les etats de salaires dans les 3 derniers mois" : "حالات الرواتب في الأشهر الثلاث الماضية"
+
+
 
 
 

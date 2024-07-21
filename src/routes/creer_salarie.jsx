@@ -22,8 +22,8 @@ export const CreerSalarie = () => {
 
     const get = async ()  => {
         try {
-          const response = await api.get("banques/"); 
-          setBanques(response.data.liste)
+          const response = await api.get("banque_active/"); 
+          setBanques(response.data)
         }
         catch (exception){
           console.log(exception)
@@ -78,7 +78,7 @@ export const CreerSalarie = () => {
                 </div>
                 <div>
                     <p  className='text-lg  text-blackColor font-semibold'>{t('NNI')}</p>
-                    <input type="text" value={nni} onChange={(e) => setNNI(e.target.value)} placeholder={t("Entrez le numero national")} className="px-4 py-2 w-full bg-inputFieldColor rounded-lg outline-none placeholder-inputTextColor font-medium" />
+                    <input type="number" value={nni} onChange={(e) => setNNI(e.target.value)} placeholder={t("Entrez le numero national")} className="px-4 py-2 w-full bg-inputFieldColor rounded-lg outline-none placeholder-inputTextColor font-medium" />
                 </div>
                 <div>
                     <p  className='text-lg  text-blackColor font-semibold'>{t('Banque')}</p>
@@ -86,11 +86,11 @@ export const CreerSalarie = () => {
                 </div>
                 <div>
                     <p  className='text-lg  text-blackColor font-semibold'>{t("Numero de compte")}</p>
-                    <input type="text" value={numero_compte} onChange={(e) => setNumeroCompte(e.target.value)} placeholder={t("Entrez le numero de compte")} className="px-4 py-2 w-full bg-inputFieldColor rounded-lg outline-none placeholder-inputTextColor font-medium" />
+                    <input type="number" value={numero_compte} onChange={(e) => setNumeroCompte(e.target.value)} placeholder={t("Entrez le numero de compte")} className="px-4 py-2 w-full bg-inputFieldColor rounded-lg outline-none placeholder-inputTextColor font-medium" />
                 </div>
                 <div>
                     <p  className='text-lg  text-blackColor font-semibold'>{t('Salaire')}</p>
-                    <input type="text" value={salaire} onChange={(e) => setSalaire(e.target.value)} placeholder={t("Entrez le salaire")} className="px-4 py-2 w-full bg-inputFieldColor rounded-lg outline-none placeholder-inputTextColor font-medium" />
+                    <input type="number" value={salaire} onChange={(e) => setSalaire(e.target.value)} placeholder={t("Entrez le salaire")} className="px-4 py-2 w-full bg-inputFieldColor rounded-lg outline-none placeholder-inputTextColor font-medium" />
                 </div>
 
 

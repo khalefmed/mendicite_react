@@ -7,10 +7,26 @@ import { MdDelete } from "react-icons/md";
 import Supprimer from '../common/supprimer';
 import toast, { Toaster } from 'react-hot-toast';
 import { ModifierBoutton } from '../shared/modifier_boutton';
+import Activer from '../common/activer';
+import ActiverEtablissement from '../common/activer_etablissement';
 
 export const ListeEtablissements = ({donnees, setDonnees}) => {
     const { i18n, t } = useTranslation();
     const [liste, setListe] = useState(donnees)
+
+    const role = window.localStorage.getItem("role");
+
+    const activer_desactiver = async (id, status) => {
+        try {
+          const response = await api.put(`${status}/${id}/`);
+          window.location.reload();
+        } catch (exception) {
+          console.log(exception);
+          toast.error(
+            <p className="text-redColor">{t("Une erreur s'est produite")}</p>
+          );
+        }
+      };
 
     useEffect(() => {
         setListe(liste)
@@ -45,7 +61,15 @@ export const ListeEtablissements = ({donnees, setDonnees}) => {
                         <td className='py-4 min-w-[300px] text-center text-textGreyColor font-medium text-sm '>{e.nom_etablissement}</td>
                         <td className='py-4 w-60 flex flex-row gap-1 justify-center align-center  text-center text-textGreyColor font-normal  rounded-lg'>
                             <ModifierBoutton lien="etablissements" id={e.id} />
-                            <Supprimer supprimer={supprimer} id={e.id}/>
+                            {role == "Administrateur" ? (
+                            <ActiverEtablissement
+                                activer={activer_desactiver}
+                                id={e.id}
+                                statut={e.active ? "desactiver_etablissement" : "activer_etablissement"}
+                            />
+                            ) : (
+                            <></>
+                            )}
                         </td>
                     </tr>
                     )}

@@ -7,28 +7,29 @@ import { MdDelete } from "react-icons/md";
 import Supprimer from '../common/supprimer';
 import toast, { Toaster } from 'react-hot-toast';
 import { ModifierBoutton } from '../shared/modifier_boutton';
+import Activer from '../common/activer';
 
 export const ListeBanques = ({donnees, setDonnees}) => {
     const { i18n, t } = useTranslation();
     const [liste, setListe] = useState(donnees)
 
+    const role = window.localStorage.getItem("role");
+
     useEffect(() => {
         setListe(liste)
     }, [])
 
-    const supprimer = async (id)  => {
+    const activer_desactiver = async (id, status) => {
         try {
-            const response = await api.delete(`banques/${id}/`); 
-            const  d = donnees.filter((e) => {
-                return e.id !== id;
-            });
-            setDonnees(d);
-            }
-        catch (exception){
-          console.log(exception)
-          toast.error(<p className="text-redColor">{t('Une erreur s\'est produite')}</p>);
+          const response = await api.put(`${status}/${id}/`);
+          window.location.reload();
+        } catch (exception) {
+          console.log(exception);
+          toast.error(
+            <p className="text-redColor">{t("Une erreur s'est produite")}</p>
+          );
         }
-    }
+      };
 
     return (
         <div className='w-full overflow-x-scroll'>
@@ -45,7 +46,15 @@ export const ListeBanques = ({donnees, setDonnees}) => {
                         <td className='py-4 min-w-[300px] text-center text-textGreyColor font-medium text-sm '>{e.nom_banque}</td>
                         <td className='py-4  w-60 flex flex-row gap-1 justify-center align-center  text-center text-textGreyColor font-medium  rounded-lg'>
                             <ModifierBoutton lien="banques" id={e.id} />
-                            <Supprimer supprimer={supprimer} id={e.id}/>
+                            {role == "Administrateur" ? (
+                            <Activer
+                                activer={activer_desactiver}
+                                id={e.id}
+                                statut={e.active ? "desactiver_banque" : "activer_banque"}
+                            />
+                            ) : (
+                            <></>
+                            )}
                         </td>
                     </tr>
                     )}
