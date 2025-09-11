@@ -43,91 +43,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Index />,
-      },
-      {
-        path: "/etablissements",
-        element: <ProtectedRoute component={Etablissements} />,
-      },
-      {
-        path: "/etablissements/creer",
-        element: <CreerEtablissement />,
-      },
-      {
-        path: "/etablissements/modifier/:id",
-        element: <ModifierEtablissement />,
-      },
-      {
-        path: "/banques/creer",
-        element: <CreerBanque />,
-      },
-      {
-        path: "/banques/modifier/:id",
-        element: <ModifierBanque />,
-      },
-      {
-        path: "/banques",
         element: <Banques />,
-      },
-      {
-        path: "/salaries",
-        element: <Salaries />,
-      },
-      {
-        path: "/salaries/creer",
-        element: <CreerSalarie />,
-      },
-      {
-        path: "/salaries/modifier/:id",
-        element: <ModifierSalarie />,
-      },
-      {
-        path: "/cheques",
-        element: <Cheques />,
-      },
-      {
-        path: "/cheques/creer",
-        element: <CreerCheque />,
-      },
-      {
-        path: "/cheques/modifier/:id",
-        element: <ModifierCheque />,
-      },
-      {
-        path: "/etats",
-        element: <Etats />,
-      },
-      {
-        path: "/etats_etablissement",
-        element: <EtatsEtablissement />,
-      },
-      {
-        path: "/etats/creer",
-        element: <CreerEtat />,
-      },
-      {
-        path: "/etats/:id",
-        element: <EtatDetails />,
-      },
-      {
-        path: "/utilisateurs",
-        element: <Utilisateurs />,
-      },
-      {
-        path: "/utilisateurs/creer",
-        element: <CreerUtilisateur />,
-      },
-      {
-        path: "/mot_de_passe",
-        element: <MotDePasse />,
-      },
-      {
-        path: "/modifier_informations",
-        element: <ModifierInformations />,
-      },
-      {
-        path: "/profil",
-        element: <Profil />,
       },
       {
         path: "/deconnexion",
@@ -138,21 +54,21 @@ const router = createBrowserRouter([
   { path: "/connexion", element: <Connexion /> },
 ]);
 
-const lang = window.localStorage.getItem("lang");
+// const lang = window.localStorage.getItem("lang");
 
-if(lang){
-  i18n.changeLanguage(lang)
-}
-else {
-  window.localStorage.setItem('lang', i18n.language)
-}
+// if(lang){
+//   i18n.changeLanguage(lang)
+// }
+// else {
+//   window.localStorage.setItem('lang', i18n.language)
+// }
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <I18nextProvider i18n={i18n}>
       <div
-        dir={i18n.language === "ar" ? "rtl" : "ltr"}
-        className={"mainElement " +(i18n.language == "ar" ? "font-arabic" : "font-fr")}
+        dir='rtl'
+        className={"mainElement font-ar"}
       >
         <Theme>
           <RouterProvider router={router} />
