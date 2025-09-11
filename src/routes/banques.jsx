@@ -8,14 +8,15 @@ import { api } from '@/lib/api';
 import toast, { Toaster } from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { Recherche } from '@/components/ui/shared/recherche';
-import { NouveauBoutton } from '@/components/ui/shared/nouveau_boutton';
 import { ListeBanques } from '@/components/ui/listes/listeBanques';
 import { BsBank2 } from 'react-icons/bs';
 import { FaMoneyBillWave } from 'react-icons/fa';
 import AddButton from '../assets/add_button.png';
+import { useNavigate } from 'react-router-dom'; // Ajout pour la navigation
 
 function Banques() {
   const { i18n, t } = useTranslation();
+  const navigate = useNavigate(); // Hook pour la navigation
 
   const [originalliste, setOriginalListe] = useState([]);
   const [liste, setListe] = useState([]);
@@ -149,35 +150,50 @@ function Banques() {
     }
   };
 
+  const handleLogout = () => {
+    navigate('/deconnexion');
+  };
+
   return (
-    <div className="flex flex-col gap-10 px-10 max-sm:px-4">
-      <div className="flex justify-end">
-        <img src={AddButton} width={150} alt="" onClick={openModal} className="cursor-pointer" />
-      </div>
-      <div className="flex flex-row max-md:flex-col gap-3 justify-between items-center">
-        <h2 className="text-xl font-semibold">لائحة المتسولين</h2>
-        <div className="flex flex-row gap-2">
-          <Recherche
-            rechercher={recherchernni}
-            recherche={recherchenni}
-            setRecherche={setRechercheNni}
-            placeholder={t('الرقم الوطني ...')}
-          />
-          <Recherche
-            rechercher={recherchertelephone}
-            recherche={recherchetelephone}
-            setRecherche={setRechercheTelephone}
-            placeholder={t('رقم الهاتف ...')}
-          />
-          <Recherche
-            rechercher={recherchertype}
-            recherche={recherchetype}
-            setRecherche={setRechercheType}
-            placeholder={t('نوع الاعاقة ...')}
-          />
+    <div className="flex flex-col min-h-screen px-4 sm:px-6 lg:px-10">
+      {/* Header with Logout Button */}
+     
+
+      <div className="flex flex-col gap-6">
+        <div className="flex justify-between">
+          <button
+            onClick={handleLogout}
+            className="bg-red-600 text-white py-1 px-4 rounded hover:bg-red-700"
+          >
+            {t('تسجيل الخروج')}
+          </button>
+          <img src={AddButton} width={150} alt="" onClick={openModal} className="cursor-pointer" />
         </div>
+        <div className="flex flex-col sm:flex-row gap-4 justify-between items-center">
+          <h2 className="text-xl font-semibold">لائحة المتسولين</h2>
+          <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+            <Recherche
+              rechercher={recherchernni}
+              recherche={recherchenni}
+              setRecherche={setRechercheNni}
+              placeholder={t('الرقم الوطني ...')}
+            />
+            <Recherche
+              rechercher={recherchertelephone}
+              recherche={recherchetelephone}
+              setRecherche={setRechercheTelephone}
+              placeholder={t('رقم الهاتف ...')}
+            />
+            <Recherche
+              rechercher={recherchertype}
+              recherche={recherchetype}
+              setRecherche={setRechercheType}
+              placeholder={t('نوع الاعاقة ...')}
+            />
+          </div>
+        </div>
+        {liste && <ListeBanques donnees={liste} setDonnees={setListe} />}
       </div>
-      {liste && <ListeBanques donnees={liste} setDonnees={setListe} />}
 
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center z-50">
@@ -185,8 +201,8 @@ function Banques() {
             className="fixed inset-0 bg-black bg-opacity-50"
             onClick={closeModal}
           ></div>
-          <div className="bg-white p-6 rounded-lg shadow-lg z-50 max-w-md w-full">
-            <h2 className="text-xl font-semibold text-gray-800 mb-4">{t('إضافة')}</h2>
+          <div className="bg-white p-4 sm:p-6 rounded-lg shadow-lg z-50 max-w-xs sm:max-w-md w-full">
+            <h2 className="text-xl font-semibold text-gray-800 mb-4 text-center">{t('إضافة')}</h2>
             <div className="mb-4 p-1 rounded-lg flex justify-between items-center bg-bgGreyColor">
               <button
                 onClick={() => setIsSingleAdd(true)} 
@@ -201,10 +217,10 @@ function Banques() {
             </div>
             {isSingleAdd ? (
               <form onSubmit={handleSubmit}>
-                <div className="mb-4">
-                  <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="prenom">
+                <div className="mb-2 sm:mb-4">
+                  {/* <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="prenom">
                     {t('الاسم الكامل')}
-                  </label>
+                  </label> */}
                   <input
                     type="text"
                     name="prenom"
@@ -214,10 +230,10 @@ function Banques() {
                     placeholder={t('الاسم ...')}
                   />
                 </div>
-                <div className="mb-4">
-                  <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="nom">
+                <div className="mb-2 sm:mb-4">
+                  {/* <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="nom">
                     {t('الاسم العائلي')}
-                  </label>
+                  </label> */}
                   <input
                     type="text"
                     name="nom"
@@ -227,10 +243,10 @@ function Banques() {
                     placeholder={t('الاسم العائلي ...')}
                   />
                 </div>
-                <div className="mb-4">
-                  <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="nni">
+                <div className="mb-2 sm:mb-4">
+                  {/* <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="nni">
                     {t('الرقم الوطني')}
-                  </label>
+                  </label> */}
                   <input
                     type="text"
                     name="nni"
@@ -240,10 +256,10 @@ function Banques() {
                     placeholder={t('الرقم الوطني ...')}
                   />
                 </div>
-                <div className="mb-4">
-                  <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="telephone">
+                <div className="mb-2 sm:mb-4">
+                  {/* <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="telephone">
                     {t('رقم الهاتف')}
-                  </label>
+                  </label> */}
                   <input
                     type="text"
                     name="telephone"
@@ -253,10 +269,10 @@ function Banques() {
                     placeholder={t('رقم الهاتف ...')}
                   />
                 </div>
-                <div className="mb-4">
-                  <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="type_mendicite">
+                <div className="mb-2 sm:mb-4">
+                  {/* <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="type_mendicite">
                     {t('نوع الاعاقة')}
-                  </label>
+                  </label> */}
                   <input
                     type="text"
                     name="type_mendicite"
@@ -266,10 +282,10 @@ function Banques() {
                     placeholder={t('نوع الاعاقة ...')}
                   />
                 </div>
-                <div className="mb-4">
-                  <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="wilaya">
+                <div className="mb-2 sm:mb-4">
+                  {/* <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="wilaya">
                     {t('الولاية')}
-                  </label>
+                  </label> */}
                   <select
                     name="wilaya"
                     value={formData.wilaya}
@@ -284,10 +300,10 @@ function Banques() {
                     ))}
                   </select>
                 </div>
-                <div className="mb-4">
-                  <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="moughataa">
+                <div className="mb-2 sm:mb-4">
+                  {/* <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="moughataa">
                     {t('المقاطعة')}
-                  </label>
+                  </label> */}
                   <select
                     name="moughataa"
                     value={formData.moughataa}
@@ -303,16 +319,16 @@ function Banques() {
                     ))}
                   </select>
                 </div>
-                <div className="flex justify-center gap-2">
+                <div className="flex flex-col sm:flex-row justify-center gap-2">
                   <button
                     type="submit"
-                    className="bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700"
+                    className="bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700 w-full sm:w-auto"
                   >
                     {t('إضافة')}
                   </button>
                   <button
                     type="button"
-                    className="ml-2 bg-gray-300 text-gray-800 py-2 px-4 rounded hover:bg-gray-400"
+                    className="mt-2 sm:mt-0 bg-gray-300 text-gray-800 py-2 px-4 rounded hover:bg-gray-400 w-full sm:w-auto"
                     onClick={closeModal}
                   >
                     {t('إغلاق')}
@@ -321,7 +337,7 @@ function Banques() {
               </form>
             ) : (
               <div>
-                <div className="mb-4">
+                <div className="mb-3 sm:mb-4">
                   <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="csvFile">
                     {t('رفع ملف CSV')}
                   </label>
@@ -333,17 +349,17 @@ function Banques() {
                     className="appearance-none bg-inputFieldColor rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   />
                 </div>
-                <div className="flex justify-center gap-2">
+                <div className="flex flex-col sm:flex-row justify-center gap-2">
                   <button
                     type="button"
                     onClick={handleSubmit}
-                    className="bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700"
+                    className="bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700 w-full sm:w-auto"
                   >
                     {t('رفع وإضافة')}
                   </button>
                   <button
                     type="button"
-                    className="ml-2 bg-gray-300 text-gray-800 py-2 px-4 rounded hover:bg-gray-400"
+                    className="mt-2 sm:mt-0 bg-gray-300 text-gray-800 py-2 px-4 rounded hover:bg-gray-400 w-full sm:w-auto"
                     onClick={closeModal}
                   >
                     {t('إغلاق')}
