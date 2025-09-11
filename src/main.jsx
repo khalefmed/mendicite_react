@@ -39,11 +39,11 @@ import ProtectedRoute from "./lib/auth";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <HomePage />,
+    element: <HomePage component={Banques} />,
     children: [
       {
         path: "/",
-        element: <Banques />,
+        element: <ProtectedRoute component={Banques} />,
       },
       {
         path: "/deconnexion",
