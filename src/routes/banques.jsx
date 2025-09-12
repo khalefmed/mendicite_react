@@ -26,6 +26,7 @@ function Banques() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setFormData] = useState({ prenom: '', nom: '', nni: '', telephone: '', wilaya: '', moughataa: '', type_mendicite: '', csvFile: null });
   const [isSingleAdd, setIsSingleAdd] = useState(true);
+  const [errors, setErrors] = useState({ prenom: false, nom: false, nni: false, telephone: false }); // État pour suivre les erreurs
 
   // Liste des Wilayas et leurs Moughataas
   const wilayas = {
@@ -104,6 +105,7 @@ function Banques() {
     setIsModalOpen(false);
     setFormData({ prenom: '', nom: '', nni: '', telephone: '', wilaya: '', moughataa: '', type_mendicite: '', csvFile: null });
     setIsSingleAdd(true);
+    setErrors({ prenom: false, nom: false, nni: false, telephone: false }); // Réinitialiser les erreurs
   };
 
   const handleChange = (e) => {
@@ -112,6 +114,8 @@ function Banques() {
     if (name === 'wilaya') {
       setFormData((prev) => ({ ...prev, moughataa: '' }));
     }
+    // Réinitialiser l'erreur pour le champ modifié
+    setErrors((prev) => ({ ...prev, [name]: value.trim() === '' }));
   };
 
   const handleFileChange = (e) => {
@@ -121,6 +125,20 @@ function Banques() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // Vérification des champs obligatoires
+    const newErrors = {
+      prenom: formData.prenom.trim() === '',
+      nom: formData.nom.trim() === '',
+      nni: formData.nni.trim() === '',
+      telephone: formData.telephone.trim() === '',
+    };
+    setErrors(newErrors);
+
+    if (Object.values(newErrors).some((error) => error)) {
+      toast.error(<p className="text-redColor">{t('يرجى ملء جميع الحقول المطلوبة')}</p>);
+      return;
+    }
+
     try {
       if (isSingleAdd) {
         const response = await api.post('mendicites/', formData);
@@ -156,9 +174,6 @@ function Banques() {
 
   return (
     <div className="flex flex-col min-h-screen px-4 sm:px-6 lg:px-10">
-      {/* Header with Logout Button */}
-     
-
       <div className="flex flex-col gap-6">
         <div className="flex justify-between">
           <button
@@ -218,61 +233,46 @@ function Banques() {
             {isSingleAdd ? (
               <form onSubmit={handleSubmit}>
                 <div className="mb-2 sm:mb-4">
-                  {/* <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="prenom">
-                    {t('الاسم الكامل')}
-                  </label> */}
                   <input
                     type="text"
                     name="prenom"
                     value={formData.prenom}
                     onChange={handleChange}
-                    className="appearance-none bg-inputFieldColor rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    className={`appearance-none bg-inputFieldColor rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.prenom ? 'border-2 border-red-500' : ''}`}
                     placeholder={t('الاسم ...')}
                   />
                 </div>
                 <div className="mb-2 sm:mb-4">
-                  {/* <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="nom">
-                    {t('الاسم العائلي')}
-                  </label> */}
                   <input
                     type="text"
                     name="nom"
                     value={formData.nom}
                     onChange={handleChange}
-                    className="appearance-none bg-inputFieldColor rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    className={`appearance-none bg-inputFieldColor rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.nom ? 'border-2 border-red-500' : ''}`}
                     placeholder={t('الاسم العائلي ...')}
                   />
                 </div>
                 <div className="mb-2 sm:mb-4">
-                  {/* <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="nni">
-                    {t('الرقم الوطني')}
-                  </label> */}
                   <input
                     type="text"
                     name="nni"
                     value={formData.nni}
                     onChange={handleChange}
-                    className="appearance-none bg-inputFieldColor rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    className={`appearance-none bg-inputFieldColor rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.nni ? 'border-2 border-red-500' : ''}`}
                     placeholder={t('الرقم الوطني ...')}
                   />
                 </div>
                 <div className="mb-2 sm:mb-4">
-                  {/* <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="telephone">
-                    {t('رقم الهاتف')}
-                  </label> */}
                   <input
                     type="text"
                     name="telephone"
                     value={formData.telephone}
                     onChange={handleChange}
-                    className="appearance-none bg-inputFieldColor rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    className={`appearance-none bg-inputFieldColor rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.telephone ? 'border-2 border-red-500' : ''}`}
                     placeholder={t('رقم الهاتف ...')}
                   />
                 </div>
                 <div className="mb-2 sm:mb-4">
-                  {/* <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="type_mendicite">
-                    {t('نوع الاعاقة')}
-                  </label> */}
                   <input
                     type="text"
                     name="type_mendicite"
@@ -283,9 +283,6 @@ function Banques() {
                   />
                 </div>
                 <div className="mb-2 sm:mb-4">
-                  {/* <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="wilaya">
-                    {t('الولاية')}
-                  </label> */}
                   <select
                     name="wilaya"
                     value={formData.wilaya}
@@ -301,9 +298,6 @@ function Banques() {
                   </select>
                 </div>
                 <div className="mb-2 sm:mb-4">
-                  {/* <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="moughataa">
-                    {t('المقاطعة')}
-                  </label> */}
                   <select
                     name="moughataa"
                     value={formData.moughataa}

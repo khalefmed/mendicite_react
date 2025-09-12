@@ -66,10 +66,9 @@ export const ListeBanques = ({ donnees, setDonnees }) => {
       <table className="w-full border-separate border-spacing-y-2">
         <thead className="bg-whiteColor">
           <tr>
-            <th className="py-4 text-center min-w-[100px] text-buttonColor font-semibold text-sm rounded-tl-lg">الاسم الكامل</th>
-            <th className="py-4 text-center min-w-[300px] text-buttonColor font-semibold text-sm">الرقم الوطني</th>
+            <th className="py-4 text-center min-w-[300px] text-buttonColor font-semibold text-sm rounded-tl-lg">الاسم الكامل</th>
             <th className="py-4 text-center w-52 text-buttonColor font-semibold text-sm">رقم الهاتف</th>
-            <th className="py-4 text-center w-52 text-buttonColor font-semibold text-sm">محل السكن</th>
+            <th className="py-4 text-center min-w-[150px] text-buttonColor font-semibold text-sm">الرقم الوطني</th>
             <th className="py-4 text-center w-52 text-buttonColor font-semibold text-sm">الولاية</th>
             <th className="py-4 text-center w-52 text-buttonColor font-semibold text-sm">المقاطعة</th>
             <th className="py-4 text-center w-52 text-buttonColor font-semibold text-sm rounded-tr-lg">نوع الاعاقة</th>
@@ -79,13 +78,12 @@ export const ListeBanques = ({ donnees, setDonnees }) => {
         <tbody>
           {liste?.map((e) => (
             <tr key={e.id} className="bg-whiteColor">
-              <td className="py-4 text-center text-blackColor font-medium text-sm">{e.prenom}</td>
-              <td className="py-4 text-center text-blackColor font-medium text-sm">{e.nom}</td>
+              <td className="py-4 text-center text-blackColor font-medium text-sm">{e.prenom + ' ' + e.nom}</td>
               <td className="py-4 text-center text-blackColor font-medium text-sm">{e.telephone}</td>
               <td className="py-4 text-center text-blackColor font-medium text-sm">{e.nni}</td>
-              <td className="py-4 text-center text-blackColor font-medium text-sm">{e.type_mendicite}</td>
               <td className="py-4 text-center text-blackColor font-medium text-sm">{e.wilaya}</td>
               <td className="py-4 text-center text-blackColor font-medium text-sm">{e.moughataa}</td>
+              <td className="py-4 text-center text-blackColor font-medium text-sm">{e.type_mendicite}</td>
               <td className="py-4 text-center text-blackColor font-medium text-sm flex justify-center">
                 <img
                   src={Logo}
