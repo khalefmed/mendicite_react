@@ -45,7 +45,7 @@ export const ListeBanques = ({ donnees, setDonnees }) => {
         <head><title>الطباعة</title></head>
         <body dir=rtl>
           <h2>${t('التفاصيل')}</h2>
-          <p><strong>${t('الاسم الكامل')}:</strong> ${selectedItem?.prenom} ${selectedItem?.nom}</p>
+          <p><strong>${t('الاسم الكامل')}:</strong> ${selectedItem?.nom}</p>
           <p><strong>${t('الرقم الوطني')}:</strong> ${selectedItem?.nni}</p>
           <p><strong>${t('رقم الهاتف')}:</strong> ${selectedItem?.telephone}</p>
           <p><strong>${t('نوع الاعاقة')}:</strong> ${selectedItem?.type_mendicite}</p>
@@ -72,18 +72,20 @@ export const ListeBanques = ({ donnees, setDonnees }) => {
             <th className="py-4 text-center w-52 text-buttonColor font-semibold text-sm">الولاية</th>
             <th className="py-4 text-center w-52 text-buttonColor font-semibold text-sm">المقاطعة</th>
             <th className="py-4 text-center w-52 text-buttonColor font-semibold text-sm rounded-tr-lg">نوع الاعاقة</th>
+            <th className="py-4 text-center w-52 text-buttonColor font-semibold text-sm rounded-tr-lg">الجنس</th>
             <th className="py-4 text-center w-52 text-buttonColor font-semibold text-sm rounded-tr-lg">فعل</th>
           </tr>
         </thead>
         <tbody>
           {liste?.map((e) => (
             <tr key={e.id} className="bg-whiteColor">
-              <td className="py-4 text-center text-blackColor font-medium text-sm">{e.prenom + ' ' + e.nom}</td>
-              <td className="py-4 text-center text-blackColor font-medium text-sm">{e.telephone}</td>
+              <td className="py-4 text-center text-blackColor font-medium text-sm">{e.nom}</td>
+              <td className="py-4 text-center text-blackColor font-medium text-sm">{e.telephone == '' ? '----' : e.telephone}</td>
               <td className="py-4 text-center text-blackColor font-medium text-sm">{e.nni}</td>
-              <td className="py-4 text-center text-blackColor font-medium text-sm">{e.wilaya}</td>
-              <td className="py-4 text-center text-blackColor font-medium text-sm">{e.moughataa}</td>
-              <td className="py-4 text-center text-blackColor font-medium text-sm">{e.type_mendicite}</td>
+              <td className="py-4 text-center text-blackColor font-medium text-sm">{e.wilaya == '' ? '----' : e.wilaya}</td>
+              <td className="py-4 text-center text-blackColor font-medium text-sm">{e.moughataa == '' ? '----' : e.moughataa}</td>
+              <td className="py-4 text-center text-blackColor font-medium text-sm">{e.type_mendicite == '' ? '----' : e.type_mendicite}</td>
+              <td className="py-4 text-center text-blackColor font-medium text-sm">{e.sexe == '' ? '----' : e.sexe}</td>
               <td className="py-4 text-center text-blackColor font-medium text-sm flex justify-center">
                 <img
                   src={Logo}

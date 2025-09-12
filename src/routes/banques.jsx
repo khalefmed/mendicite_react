@@ -24,9 +24,8 @@ function Banques() {
   const [recherchenni, setRechercheNni] = useState('');
   const [recherchetype, setRechercheType] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [formData, setFormData] = useState({ prenom: '', nom: '', nni: '', telephone: '', wilaya: '', moughataa: '', type_mendicite: '', csvFile: null });
+  const [formData, setFormData] = useState({ sexe: '', nom: '', nni: '', telephone: '', wilaya: '', moughataa: '', type_mendicite: '', csvFile: null });
   const [isSingleAdd, setIsSingleAdd] = useState(true);
-  const [errors, setErrors] = useState({ prenom: false, nom: false, nni: false, telephone: false }); // État pour suivre les erreurs
 
   // Liste des Wilayas et leurs Moughataas
   const wilayas = {
@@ -105,7 +104,6 @@ function Banques() {
     setIsModalOpen(false);
     setFormData({ prenom: '', nom: '', nni: '', telephone: '', wilaya: '', moughataa: '', type_mendicite: '', csvFile: null });
     setIsSingleAdd(true);
-    setErrors({ prenom: false, nom: false, nni: false, telephone: false }); // Réinitialiser les erreurs
   };
 
   const handleChange = (e) => {
@@ -114,8 +112,6 @@ function Banques() {
     if (name === 'wilaya') {
       setFormData((prev) => ({ ...prev, moughataa: '' }));
     }
-    // Réinitialiser l'erreur pour le champ modifié
-    setErrors((prev) => ({ ...prev, [name]: value.trim() === '' }));
   };
 
   const handleFileChange = (e) => {
@@ -123,50 +119,66 @@ function Banques() {
     setFormData((prev) => ({ ...prev, csvFile: file }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    // Vérification des champs obligatoires
-    const newErrors = {
-      prenom: formData.prenom.trim() === '',
-      nom: formData.nom.trim() === '',
-      nni: formData.nni.trim() === '',
-      telephone: formData.telephone.trim() === '',
-    };
-    setErrors(newErrors);
-
-    if (Object.values(newErrors).some((error) => error)) {
-      toast.error(<p className="text-redColor">{t('يرجى ملء جميع الحقول المطلوبة')}</p>);
-      return;
-    }
-
-    try {
-      if (isSingleAdd) {
-        const response = await api.post('mendicites/', formData);
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  try {
+    if (isSingleAdd) {
+      const response = await api.post('mendicites/', formData);
+      if (response.status === 201) {
         setListe([response.data, ...liste]);
         setOriginalListe([response.data, ...originalliste]);
         closeModal();
         toast.success(<p className="text-green-600">{t('تم الإضافة بنجاح')}</p>);
-      } else {
-        if (!formData.csvFile) {
-          toast.error(<p className="text-redColor">{t('يرجى اختيار ملف CSV')}</p>);
-          return;
-        }
-        const formDataToSend = new FormData();
-        formDataToSend.append('file', formData.csvFile);
-        const response = await api.post('mendicites/upload-csv/', formDataToSend, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
+      }
+    } else {
+      if (!formData.csvFile) {
+        toast.error(<p className="text-redColor">{t('يرجى اختيار ملف')}</p>);
+        return;
+      }
+      const formDataToSend = new FormData();
+      formDataToSend.append('file', formData.csvFile);
+      const response = await api.post('mendicites/upload-csv/', formDataToSend, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      if (response.status === 201) {
         await get();
         closeModal();
-        toast.success(<p className="text-green-600">{t('تم استيراد ملف CSV بنجاح')}</p>);
+        toast.success(<p className="text-green-600">{t('تم استيراد الملف بنجاح')}</p>);
+      } else if (response.status === 400) {
+        const error = await response.json();
+        toast.error(<p className="text-redColor">{t('لم يتم تقديم أي ملف')}</p>);
+      } else if (response.status === 415) {
+        const error = await response.json();
+        toast.error(<p className="text-redColor">{t('نوع الملف غير مدعوم. يرجى استخدام CSV أو Excel (.xlsx)')}</p>);
+      } else if (response.status === 409) {
+        const error = await response.json();
+        toast.error(<p className="text-redColor">{t(error.error || 'حدث تضارب في البيانات، تحقق من الرقم الوطني')}</p>);
+      } else if (response.status === 422) {
+        const error = await response.json();
+        toast.error(<p className="text-redColor">{t(error.error || 'الملف فارغ أو غير صالح أو غير صحيح التكوين')}</p>);
       }
-    } catch (exception) {
-      console.log(exception);
+    }
+  } catch (exception) {
+    console.log(exception);
+    if (exception.response) {
+      const error = await exception.response.json();
+      if (exception.response.status === 400) {
+        toast.error(<p className="text-redColor">{t('البيانات المقدمة غير صالحة، تحقق من الحقول المطلوبة')}</p>);
+      } else if (exception.response.status === 409) {
+        toast.error(<p className="text-redColor">{t(error.error || 'الرقم الوطني موجود بالفعل، اختر رقمًا آخر')}</p>);
+      } else if (exception.response.status === 500) {
+        toast.error(<p className="text-redColor">{t('حدث خطأ غير متوقع، حاول مرة أخرى لاحقًا')}</p>);
+      } else {
+        toast.error(<p className="text-redColor">{t('حدث خطأ ما')}</p>);
+      }
+    } else {
       toast.error(<p className="text-redColor">{t('حدث خطأ ما')}</p>);
     }
-  };
+  }
+};
 
   const handleLogout = () => {
     navigate('/deconnexion');
@@ -174,6 +186,9 @@ function Banques() {
 
   return (
     <div className="flex flex-col min-h-screen px-4 sm:px-6 lg:px-10">
+      {/* Header with Logout Button */}
+     
+
       <div className="flex flex-col gap-6">
         <div className="flex justify-between">
           <button
@@ -185,7 +200,7 @@ function Banques() {
           <img src={AddButton} width={150} alt="" onClick={openModal} className="cursor-pointer" />
         </div>
         <div className="flex flex-col sm:flex-row gap-4 justify-between items-center">
-          <h2 className="text-xl font-semibold">لائحة المتسولين</h2>
+          {/* <h2 className="text-xl font-semibold">لائحة المتسولين</h2> */}
           <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
             <Recherche
               rechercher={recherchernni}
@@ -232,47 +247,62 @@ function Banques() {
             </div>
             {isSingleAdd ? (
               <form onSubmit={handleSubmit}>
-                <div className="mb-2 sm:mb-4">
+                {/* <div className="mb-2 sm:mb-4">
+                  <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="prenom">
+                    {t('الاسم الكامل')}
+                  </label>
                   <input
                     type="text"
                     name="prenom"
                     value={formData.prenom}
                     onChange={handleChange}
-                    className={`appearance-none bg-inputFieldColor rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.prenom ? 'border-2 border-red-500' : ''}`}
+                    className="appearance-none bg-inputFieldColor rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     placeholder={t('الاسم ...')}
                   />
-                </div>
+                </div> */}
                 <div className="mb-2 sm:mb-4">
+                  {/* <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="nom">
+                    {t('الاسم العائلي')}
+                  </label> */}
                   <input
                     type="text"
                     name="nom"
                     value={formData.nom}
                     onChange={handleChange}
-                    className={`appearance-none bg-inputFieldColor rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.nom ? 'border-2 border-red-500' : ''}`}
+                    className="appearance-none bg-inputFieldColor rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     placeholder={t('الاسم العائلي ...')}
                   />
                 </div>
                 <div className="mb-2 sm:mb-4">
+                  {/* <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="nni">
+                    {t('الرقم الوطني')}
+                  </label> */}
                   <input
                     type="text"
                     name="nni"
                     value={formData.nni}
                     onChange={handleChange}
-                    className={`appearance-none bg-inputFieldColor rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.nni ? 'border-2 border-red-500' : ''}`}
+                    className="appearance-none bg-inputFieldColor rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     placeholder={t('الرقم الوطني ...')}
                   />
                 </div>
                 <div className="mb-2 sm:mb-4">
+                  {/* <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="telephone">
+                    {t('رقم الهاتف')}
+                  </label> */}
                   <input
                     type="text"
                     name="telephone"
                     value={formData.telephone}
                     onChange={handleChange}
-                    className={`appearance-none bg-inputFieldColor rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.telephone ? 'border-2 border-red-500' : ''}`}
+                    className="appearance-none bg-inputFieldColor rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     placeholder={t('رقم الهاتف ...')}
                   />
                 </div>
                 <div className="mb-2 sm:mb-4">
+                  {/* <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="type_mendicite">
+                    {t('نوع الاعاقة')}
+                  </label> */}
                   <input
                     type="text"
                     name="type_mendicite"
@@ -283,6 +313,27 @@ function Banques() {
                   />
                 </div>
                 <div className="mb-2 sm:mb-4">
+                  {/* <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="wilaya">
+                    {t('الولاية')}
+                  </label> */}
+                  <select
+                    name="sexe"
+                    value={formData.sexe}
+                    onChange={handleChange}
+                    className="appearance-none bg-inputFieldColor rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  >
+                    <option value="">{t('اختر الجنس')}</option>
+                    {['ذكر', 'انثى'].map((sexe) => (
+                      <option key={sexe} value={sexe}>
+                        {sexe}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="mb-2 sm:mb-4">
+                  {/* <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="wilaya">
+                    {t('الولاية')}
+                  </label> */}
                   <select
                     name="wilaya"
                     value={formData.wilaya}
@@ -298,6 +349,9 @@ function Banques() {
                   </select>
                 </div>
                 <div className="mb-2 sm:mb-4">
+                  {/* <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="moughataa">
+                    {t('المقاطعة')}
+                  </label> */}
                   <select
                     name="moughataa"
                     value={formData.moughataa}
@@ -338,7 +392,7 @@ function Banques() {
                   <input
                     type="file"
                     name="csvFile"
-                    accept=".csv"
+                    accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" 
                     onChange={handleFileChange}
                     className="appearance-none bg-inputFieldColor rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   />
