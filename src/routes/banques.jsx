@@ -12,20 +12,22 @@ import { ListeBanques } from '@/components/ui/listes/listeBanques';
 import { BsBank2 } from 'react-icons/bs';
 import { FaMoneyBillWave } from 'react-icons/fa';
 import AddButton from '../assets/add_button.png';
-import { useNavigate } from 'react-router-dom'; // Ajout pour la navigation
+import { useNavigate } from 'react-router-dom';
 
 function Banques() {
   const { i18n, t } = useTranslation();
-  const navigate = useNavigate(); // Hook pour la navigation
+  const navigate = useNavigate();
 
   const [originalliste, setOriginalListe] = useState([]);
   const [liste, setListe] = useState([]);
   const [recherchetelephone, setRechercheTelephone] = useState('');
   const [recherchenni, setRechercheNni] = useState('');
   const [recherchetype, setRechercheType] = useState('');
+  const [recherchenom, setRechercheNom] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setFormData] = useState({ sexe: '', nom: '', nni: '', telephone: '', wilaya: '', moughataa: '', type_mendicite: '', csvFile: null });
   const [isSingleAdd, setIsSingleAdd] = useState(true);
+  const [errors, setErrors] = useState({ nom: false, nni: false }); // Nouvel état pour suivre les erreurs
 
   // Liste des Wilayas et leurs Moughataas
   const wilayas = {
@@ -81,6 +83,22 @@ function Banques() {
     } catch (exception) {}
   };
 
+
+  const recherchernom = async (e) => {
+    e.preventDefault();
+    setRechercheNom(e.target.value);
+    if (e.target.value === '') {
+      setListe(originalliste);
+      return '';
+    }
+    try {
+      var newlist = originalliste.filter((e) =>
+        e.nom && e.nom.toLowerCase().includes(recherchenom.toLowerCase())
+      );
+      setListe(newlist);
+    } catch (exception) {}
+  };
+
   const recherchertype = async (e) => {
     e.preventDefault();
     setRechercheType(e.target.value);
@@ -88,9 +106,10 @@ function Banques() {
       setListe(originalliste);
       return '';
     }
+    console.log(e.target.value)
     try {
       var newlist = originalliste.filter((e) =>
-        e.type_mendicite && e.type_mendicite.toLowerCase().includes(recherchertype.toLowerCase())
+        e.type_mendicite && e.type_mendicite.toLowerCase().includes(recherchetype.toLowerCase())
       );
       setListe(newlist);
     } catch (exception) {}
@@ -102,8 +121,8 @@ function Banques() {
 
   const closeModal = () => {
     setIsModalOpen(false);
-    setFormData({ prenom: '', nom: '', nni: '', telephone: '', wilaya: '', moughataa: '', type_mendicite: '', csvFile: null });
-    setIsSingleAdd(true);
+    setFormData({ sexe: '', nom: '', nni: '', telephone: '', wilaya: '', moughataa: '', type_mendicite: '', csvFile: null });
+    setErrors({ nom: false, nni: false }); // Réinitialiser les erreurs
   };
 
   const handleChange = (e) => {
@@ -112,6 +131,8 @@ function Banques() {
     if (name === 'wilaya') {
       setFormData((prev) => ({ ...prev, moughataa: '' }));
     }
+    // Réinitialiser l'erreur pour le champ modifié
+    setErrors((prev) => ({ ...prev, [name]: value.trim() === '' && (name === 'nom' || name === 'nni') }));
   };
 
   const handleFileChange = (e) => {
@@ -119,66 +140,88 @@ function Banques() {
     setFormData((prev) => ({ ...prev, csvFile: file }));
   };
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  try {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    let hasErrors = false;
     if (isSingleAdd) {
-      const response = await api.post('mendicites/', formData);
-      if (response.status === 201) {
-        setListe([response.data, ...liste]);
-        setOriginalListe([response.data, ...originalliste]);
-        closeModal();
-        toast.success(<p className="text-green-600">{t('تم الإضافة بنجاح')}</p>);
-      }
-    } else {
-      if (!formData.csvFile) {
-        toast.error(<p className="text-redColor">{t('يرجى اختيار ملف')}</p>);
+      // Vérification des champs obligatoires uniquement pour l'ajout individuel
+      const newErrors = {
+        nom: formData.nom.trim() === '',
+        nni: formData.nni.trim() === '',
+      };
+      setErrors(newErrors);
+      hasErrors = Object.values(newErrors).some((error) => error);
+      if (hasErrors) {
+        toast.error(<p className="text-redColor">{t('يرجى ملء الحقول المطلوبة (الاسم والرقم الوطني)')}</p>);
         return;
       }
-      const formDataToSend = new FormData();
-      formDataToSend.append('file', formData.csvFile);
-      const response = await api.post('mendicites/upload-csv/', formDataToSend, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-
-      if (response.status === 201) {
-        await get();
-        closeModal();
-        toast.success(<p className="text-green-600">{t('تم استيراد الملف بنجاح')}</p>);
-      } else if (response.status === 400) {
-        const error = await response.json();
-        toast.error(<p className="text-redColor">{t('لم يتم تقديم أي ملف')}</p>);
-      } else if (response.status === 415) {
-        const error = await response.json();
-        toast.error(<p className="text-redColor">{t('نوع الملف غير مدعوم. يرجى استخدام CSV أو Excel (.xlsx)')}</p>);
-      } else if (response.status === 409) {
-        const error = await response.json();
-        toast.error(<p className="text-redColor">{t(error.error || 'حدث تضارب في البيانات، تحقق من الرقم الوطني')}</p>);
-      } else if (response.status === 422) {
-        const error = await response.json();
-        toast.error(<p className="text-redColor">{t(error.error || 'الملف فارغ أو غير صالح أو غير صحيح التكوين')}</p>);
-      }
     }
-  } catch (exception) {
-    console.log(exception);
-    if (exception.response) {
-      const error = await exception.response.json();
-      if (exception.response.status === 400) {
-        toast.error(<p className="text-redColor">{t('البيانات المقدمة غير صالحة، تحقق من الحقول المطلوبة')}</p>);
-      } else if (exception.response.status === 409) {
-        toast.error(<p className="text-redColor">{t(error.error || 'الرقم الوطني موجود بالفعل، اختر رقمًا آخر')}</p>);
-      } else if (exception.response.status === 500) {
-        toast.error(<p className="text-redColor">{t('حدث خطأ غير متوقع، حاول مرة أخرى لاحقًا')}</p>);
+
+    try {
+      if (isSingleAdd) {
+        const response = await api.post('mendicites/', formData);
+        if (response.status === 201) {
+          setListe([response.data, ...liste]);
+          setOriginalListe([response.data, ...originalliste]);
+          closeModal();
+          toast.success(<p className="text-green-600">{t('تم الإضافة بنجاح')}</p>);
+        }
+      } else {
+        if (!formData.csvFile) {
+          toast.error(<p className="text-redColor">{t('يرجى اختيار ملف')}</p>);
+          return;
+        }
+        const formDataToSend = new FormData();
+        formDataToSend.append('file', formData.csvFile);
+        const response = await api.post('mendicites/upload-csv/', formDataToSend, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+
+        if (response.status === 201) {
+          await get();
+          closeModal();
+          toast.success(<p className="text-green-600">{t('تم استيراد الملف بنجاح')}</p>);
+        } else if (response.status === 400) {
+          const error = await response.json();
+          toast.error(<p className="text-redColor">{t('لم يتم تقديم أي ملف')}</p>);
+        } else if (response.status === 415) {
+          const error = await response.json();
+          toast.error(<p className="text-redColor">{t('نوع الملف غير مدعوم. يرجى استخدام CSV أو Excel (.xlsx)')}</p>);
+        } else if (response.status === 409) {
+          const error = await response.json();
+          toast.error(<p className="text-redColor">{t(error.error || 'حدث تضارب في البيانات، تحقق من الرقم الوطني')}</p>);
+        } else if (response.status === 422) {
+          const error = await response.json();
+          toast.error(<p className="text-redColor">{t(error.error || 'الملف فارغ أو غير صالح أو غير صحيح التكوين')}</p>);
+        }
+      }
+    } catch (exception) {
+
+      console.log(exception)
+
+      if (exception.response.data.nni && exception.response.data.nni[0] === 'mendicite with this nni already exists.') {
+        toast.error(<p className="text-redColor">{t('الرقم الوطني موجود بالفعل، اختر رقمًا آخر')}</p>);
+        return;
+      }
+
+      if (exception.response) {
+        // const error = await exception.response.json();
+        if (exception.response.status === 400) {
+          toast.error(<p className="text-redColor">{t('البيانات المقدمة غير صالحة، تحقق من الحقول المطلوبة')}</p>);
+        } else if (exception.response.status === 409) {
+          toast.error(<p className="text-redColor">{t( ' هناك رقم وطني متكرر')}</p>);
+        } else if (exception.response.status === 500) {
+          toast.error(<p className="text-redColor">{t('حدث خطأ غير متوقع')}</p>);
+        } else {
+          toast.error(<p className="text-redColor">{t('حدث خطأ ما')}</p>);
+        }
       } else {
         toast.error(<p className="text-redColor">{t('حدث خطأ ما')}</p>);
       }
-    } else {
-      toast.error(<p className="text-redColor">{t('حدث خطأ ما')}</p>);
     }
-  }
-};
+  };
 
   const handleLogout = () => {
     navigate('/deconnexion');
@@ -186,9 +229,6 @@ const handleSubmit = async (e) => {
 
   return (
     <div className="flex flex-col min-h-screen px-4 sm:px-6 lg:px-10">
-      {/* Header with Logout Button */}
-     
-
       <div className="flex flex-col gap-6">
         <div className="flex justify-between">
           <button
@@ -200,8 +240,13 @@ const handleSubmit = async (e) => {
           <img src={AddButton} width={150} alt="" onClick={openModal} className="cursor-pointer" />
         </div>
         <div className="flex flex-col sm:flex-row gap-4 justify-between items-center">
-          {/* <h2 className="text-xl font-semibold">لائحة المتسولين</h2> */}
           <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+            <Recherche
+              rechercher={recherchernom}
+              recherche={recherchenom}
+              setRecherche={setRechercheNom}
+              placeholder={t('الإسم ...')}
+            />
             <Recherche
               rechercher={recherchernni}
               recherche={recherchenni}
@@ -235,11 +280,11 @@ const handleSubmit = async (e) => {
             <h2 className="text-xl font-semibold text-gray-800 mb-4 text-center">{t('إضافة')}</h2>
             <div className="mb-4 p-1 rounded-lg flex justify-between items-center bg-bgGreyColor">
               <button
-                onClick={() => setIsSingleAdd(true)} 
+                onClick={() => setIsSingleAdd(true)}
                 className={`text-center rounded-lg w-full h-fit py-2 ${!isSingleAdd ? 'bg-bgGreyColor' : 'bg-white'}`}>
                 {t('إضافة واحد')}
               </button>
-              <button 
+              <button
                 onClick={() => setIsSingleAdd(false)}
                 className={`text-center rounded-lg w-full h-fit py-2 ${isSingleAdd ? 'bg-bgGreyColor' : 'bg-white'}`}>
                 {t('إضافة بقائمة')}
@@ -247,49 +292,27 @@ const handleSubmit = async (e) => {
             </div>
             {isSingleAdd ? (
               <form onSubmit={handleSubmit}>
-                {/* <div className="mb-2 sm:mb-4">
-                  <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="prenom">
-                    {t('الاسم الكامل')}
-                  </label>
-                  <input
-                    type="text"
-                    name="prenom"
-                    value={formData.prenom}
-                    onChange={handleChange}
-                    className="appearance-none bg-inputFieldColor rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    placeholder={t('الاسم ...')}
-                  />
-                </div> */}
                 <div className="mb-2 sm:mb-4">
-                  {/* <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="nom">
-                    {t('الاسم العائلي')}
-                  </label> */}
                   <input
                     type="text"
                     name="nom"
                     value={formData.nom}
                     onChange={handleChange}
-                    className="appearance-none bg-inputFieldColor rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    className={`appearance-none bg-inputFieldColor rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.nom ? 'border-2 border-red-500' : ''}`}
                     placeholder={t('الاسم العائلي ...')}
                   />
                 </div>
                 <div className="mb-2 sm:mb-4">
-                  {/* <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="nni">
-                    {t('الرقم الوطني')}
-                  </label> */}
                   <input
                     type="text"
                     name="nni"
                     value={formData.nni}
                     onChange={handleChange}
-                    className="appearance-none bg-inputFieldColor rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    className={`appearance-none bg-inputFieldColor rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.nni ? 'border-2 border-red-500' : ''}`}
                     placeholder={t('الرقم الوطني ...')}
                   />
                 </div>
                 <div className="mb-2 sm:mb-4">
-                  {/* <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="telephone">
-                    {t('رقم الهاتف')}
-                  </label> */}
                   <input
                     type="text"
                     name="telephone"
@@ -300,9 +323,6 @@ const handleSubmit = async (e) => {
                   />
                 </div>
                 <div className="mb-2 sm:mb-4">
-                  {/* <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="type_mendicite">
-                    {t('نوع الاعاقة')}
-                  </label> */}
                   <input
                     type="text"
                     name="type_mendicite"
@@ -313,9 +333,6 @@ const handleSubmit = async (e) => {
                   />
                 </div>
                 <div className="mb-2 sm:mb-4">
-                  {/* <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="wilaya">
-                    {t('الولاية')}
-                  </label> */}
                   <select
                     name="sexe"
                     value={formData.sexe}
@@ -331,9 +348,6 @@ const handleSubmit = async (e) => {
                   </select>
                 </div>
                 <div className="mb-2 sm:mb-4">
-                  {/* <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="wilaya">
-                    {t('الولاية')}
-                  </label> */}
                   <select
                     name="wilaya"
                     value={formData.wilaya}
@@ -349,9 +363,6 @@ const handleSubmit = async (e) => {
                   </select>
                 </div>
                 <div className="mb-2 sm:mb-4">
-                  {/* <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="moughataa">
-                    {t('المقاطعة')}
-                  </label> */}
                   <select
                     name="moughataa"
                     value={formData.moughataa}
@@ -392,7 +403,7 @@ const handleSubmit = async (e) => {
                   <input
                     type="file"
                     name="csvFile"
-                    accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" 
+                    accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
                     onChange={handleFileChange}
                     className="appearance-none bg-inputFieldColor rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   />

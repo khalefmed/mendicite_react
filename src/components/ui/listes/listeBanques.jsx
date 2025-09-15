@@ -139,51 +139,33 @@ export const ListeBanques = ({ donnees, setDonnees }) => {
 
   return (
     <div className="w-full overflow-x-scroll">
-      <table className="w-full border-separate border-spacing-y-2">
+      <table className=" w-full table-auto border-separate border-spacing-y-2 min-w-[900px]">
         <thead className="bg-whiteColor">
           <tr>
-            <th className="py-4 text-center min-w-[300px] text-buttonColor font-semibold text-sm rounded-tl-lg">الاسم الكامل</th>
-            <th className="py-4 text-center w-52 text-buttonColor font-semibold text-sm">رقم الهاتف</th>
-            <th className="py-4 text-center min-w-[150px] text-buttonColor font-semibold text-sm">الرقم الوطني</th>
-            <th className="py-4 text-center w-52 text-buttonColor font-semibold text-sm">الولاية</th>
-            <th className="py-4 text-center w-52 text-buttonColor font-semibold text-sm">المقاطعة</th>
-            <th className="py-4 text-center w-52 text-buttonColor font-semibold text-sm">نوع الاعاقة</th>
-            <th className="py-4 text-center w-52 text-buttonColor font-semibold text-sm">الجنس</th>
-            <th className="py-4 text-center w-52 text-buttonColor font-semibold text-sm rounded-tr-lg">فعل</th>
+            <th className="py-3 px-4 text-center text-buttonColor font-semibold text-sm min-w-[200px]">الاسم الكامل</th>
+            <th className="py-3 px-4 text-center text-buttonColor font-semibold text-sm min-w-[150px]">رقم الهاتف</th>
+            <th className="py-3 px-4 text-center text-buttonColor font-semibold text-sm min-w-[180px]">الرقم الوطني</th>
+            <th className="py-3 px-4 text-center text-buttonColor font-semibold text-sm min-w-[150px]">الولاية</th>
+            <th className="py-3 px-4 text-center text-buttonColor font-semibold text-sm min-w-[150px]">المقاطعة</th>
+            <th className="py-3 px-4 text-center text-buttonColor font-semibold text-sm min-w-[150px]">نوع الاعاقة</th>
+            <th className="py-3 px-4 text-center text-buttonColor font-semibold text-sm min-w-[120px]">الجنس</th>
+            <th className="py-3 px-4 text-center text-buttonColor font-semibold text-sm min-w-[120px]">فعل</th>
           </tr>
         </thead>
         <tbody>
           {liste?.map((e) => (
             <tr key={e.id} className="bg-whiteColor">
-              <td className="py-4 text-center text-blackColor font-medium text-sm">{e.nom}</td>
-              <td className="py-4 text-center text-blackColor font-medium text-sm">{e.telephone == '' ? '----' : e.telephone}</td>
-              <td className="py-4 text-center text-blackColor font-medium text-sm">{e.nni}</td>
-              <td className="py-4 text-center text-blackColor font-medium text-sm">{e.wilaya == '' ? '----' : e.wilaya}</td>
-              <td className="py-4 text-center text-blackColor font-medium text-sm">{e.moughataa == '' ? '----' : e.moughataa}</td>
-              <td className="py-4 text-center text-blackColor font-medium text-sm">{e.type_mendicite == '' ? '----' : e.type_mendicite}</td>
-              <td className="py-4 text-center text-blackColor font-medium text-sm">{e.sexe == '' ? '----' : e.sexe}</td>
-              <td className="py-4 text-center text-blackColor font-medium text-sm flex justify-center gap-1">
-                <img
-                  src={Logo}
-                  width={20}
-                  alt="View"
-                  className="cursor-pointer"
-                  onClick={() => openModal(e, false)}
-                />
-                <img
-                  src={EditIcon}
-                  width={20}
-                  alt="Edit"
-                  className="cursor-pointer"
-                  onClick={() => openModal(e, true)}
-                />
-                <img
-                  src={DeleteIcon}
-                  width={20}
-                  alt="Delete"
-                  className="cursor-pointer"
-                  onClick={() => handleDelete(e.id)}
-                />
+              <td className="py-3 px-4 text-center">{e.nom}</td>
+              <td className="py-3 px-4 text-center">{e.telephone || '----'}</td>
+              <td className="py-3 px-4 text-center">{e.nni}</td>
+              <td className="py-3 px-4 text-center">{e.wilaya || '----'}</td>
+              <td className="py-3 px-4 text-center">{e.moughataa || '----'}</td>
+              <td className="py-3 px-4 text-center">{e.type_mendicite || '----'}</td>
+              <td className="py-3 px-4 text-center">{e.sexe || '----'}</td>
+              <td className="py-3 px-4 text-center flex justify-center gap-1">
+                <img src={Logo} width={20} alt="View" className="cursor-pointer" onClick={() => openModal(e, false)} />
+                <img src={EditIcon} width={20} alt="Edit" className="cursor-pointer" onClick={() => openModal(e, true)} />
+                <img src={DeleteIcon} width={20} alt="Delete" className="cursor-pointer" onClick={() => handleDelete(e.id)} />
               </td>
             </tr>
           ))}
@@ -217,23 +199,41 @@ export const ListeBanques = ({ donnees, setDonnees }) => {
                     <div className="text-gray-700 flex flex-row flex-wrap justify-between mb-6">
                       <div className='w-[150px]'>
                         <p><strong>{t('رقم الهاتف')}</strong> </p>
-                        <p>{selectedItem.telephone}</p>
+                        <p>{selectedItem.telephone == '' ? '-----' : selectedItem.telephone}</p>
                       </div>
                       <div className='w-[150px]'>
                         <p><strong>{t('نوع الاعاقة')}</strong> </p>
-                        <p>{selectedItem.type_mendicite}</p>
+                        <p>{selectedItem.type_mendicite == '' ? '-----' : selectedItem.type_mendicite}</p>
                       </div>
                     </div>
                     <div className="text-gray-700 flex flex-row flex-wrap justify-between mb-6">
                       <div className='w-[150px]'>
                         <p><strong>{t('الولاية')}</strong> </p>
-                        <p>{selectedItem.wilaya}</p>
+                        <p>{selectedItem.wilaya == '' ? '-----' : selectedItem.wilaya}</p>
                       </div>
                       <div className='w-[150px]'>
                         <p><strong>{t('المقاطعة')}</strong> </p>
-                        <p>{selectedItem.moughataa}</p>
+                        <p>{selectedItem.moughataa == '' ? '-----' : selectedItem.moughataa}</p>
                       </div>
                     </div>
+
+                    <div className="flex flex-col sm:flex-row justify-center gap-2">
+                      <button
+                        type="button"
+                        className="bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700 w-full sm:w-auto"
+                        onClick={handlePrint}
+                      >
+                        {t('طباعة')}
+                      </button>
+                      <button
+                        type="button"
+                        className="mt-2 sm:mt-0 bg-gray-300 text-gray-800 py-2 px-4 rounded hover:bg-gray-400 w-full sm:w-auto"
+                        onClick={closeModal}
+                      >
+                        {t('إغلاق')}
+                      </button>
+                    </div>
+
                   </>
                 ) : (
                   <form onSubmit={handleEdit}>
