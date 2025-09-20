@@ -33,6 +33,8 @@ import '@radix-ui/themes/styles.css';
 import { Theme } from "@radix-ui/themes";
 import { ModifierInformations } from "./routes/modifier_utilisateur";
 import ProtectedRoute from "./lib/auth";
+import ExternalRoute from "./external";
+import ExternalRedirect from "./routes/external-route";
 
 
 
@@ -48,6 +50,14 @@ const router = createBrowserRouter([
       {
         path: "/deconnexion",
         element: <Deconnexion />,
+      },
+      {
+        path: "/go-external/:reference",
+        element: <ExternalRedirect baseUrl="https://visa.bimbank.co/api/trx/result/" />,
+      },
+      {
+        path: "/go-external-route", 
+        element: <ExternalRoute url="https://teachformauritania.org" />,
       },
     ],
   },
